@@ -1,20 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import uuid from 'react-native-uuid';
+import Home from '~/screens/home';
+
+const Stack = createNativeStackNavigator();
+
+const screens = [
+    {
+        name: 'home',
+        component: Home,
+        options: {
+            title: 'YouTube',
+        },
+    },
+];
 
 export default function App() {
     return (
-        <View style={styles.container}>
-            <Text>Open up App.js to start working on your app!</Text>
-            <StatusBar style="auto" />
-        </View>
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName='home'>
+                {screens.map((screen) => (
+                    <Stack.Screen
+                        key={uuid.v4()}
+                        name={screen.name}
+                        component={screen.component}
+                        options={{ headerShown: false, ...screen.options }}
+                    />
+                ))}
+            </Stack.Navigator>
+        </NavigationContainer>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});
