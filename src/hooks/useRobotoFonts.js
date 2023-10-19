@@ -5,7 +5,7 @@ function useRobotoFonts() {
 
     if (loaded)
         return {
-            fontFamily: 'Roboto_400Regular, sans-serif',
+            fontFamily: 'Roboto_400Regular',
         };
 
     return {};

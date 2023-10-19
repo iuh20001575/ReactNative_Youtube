@@ -21,6 +21,7 @@ export default function App() {
             <Stack.Navigator initialRouteName='home'>
                 {screens.map((screen) => (
                     <Stack.Screen
+                        initialParams={{ filter: 'All' }}
                         key={uuid.v4()}
                         name={screen.name}
                         component={screen.component}
