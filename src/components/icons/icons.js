@@ -1,4 +1,4 @@
-import Svg, { Circle, Path } from 'react-native-svg';
+import Svg, { Circle, Path, Rect } from 'react-native-svg';
 
 export const LogoIcon = () => (
     <Svg width='27' height='20' viewBox='0 0 27 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -133,6 +133,89 @@ export const ShortsRedIcon = () => (
             clipRule='evenodd'
             d='M10.4999 14.5981L14.9999 12.0001L10.4999 9.40198L10.4999 14.5981Z'
             fill='white'
+        />
+    </Svg>
+);
+
+export const BackIcon = () => (
+    <Svg width='28' height='24' viewBox='0 0 28 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <Path
+            d='M3 11.6066L2.29289 10.8995L1.58579 11.6066L2.29289 12.3137L3 11.6066ZM3.70711 12.3137L14.3137 1.70713L12.8995 0.29292L2.29289 10.8995L3.70711 12.3137ZM14.3137 21.5061L3.70711 10.8995L2.29289 12.3137L12.8995 22.9203L14.3137 21.5061Z'
+            fill='#121212'
+            mask='url(#Path-1-inside-1_2352_335)'
+        />
+        <Rect x='4.25' y='11.25' width='19.5' height='0.5' stroke='#121212' strokeWidth='0.5' />
+    </Svg>
+);
+
+export const MicIcon = () => (
+    <Svg width={20} height={20} viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <Path
+            d='M7.08337 4.58335C7.08337 2.97252 8.38921 1.66669 10 1.66669C11.6109 1.66669 12.9167 2.97252 12.9167 4.58335V9.58335C12.9167 11.1942 11.6109 12.5 10 12.5C8.38921 12.5 7.08337 11.1942 7.08337 9.58335V4.58335Z'
+            fill='#0F0F0F'
+        />
+        <Path
+            fillRule='evenodd'
+            clipRule='evenodd'
+            d='M4.99996 9.58331V9.99998C4.99996 12.7614 7.23854 15 9.99996 15C12.7614 15 15 12.7614 15 9.99998V9.58331H15.8333V9.99998C15.8333 13.2216 13.2216 15.8333 9.99996 15.8333C6.7783 15.8333 4.16663 13.2216 4.16663 9.99998V9.58331H4.99996Z'
+            fill='#0F0F0F'
+        />
+        <Path d='M9.16663 15H10.8333V18.3333H9.16663V15Z' fill='#0F0F0F' />
+    </Svg>
+);
+
+export const CloseIcon = () => (
+    <Svg width='18' height='18' viewBox='0 0 18 18' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <Rect
+            x='16.1595'
+            y='15.6291'
+            width='0.75'
+            height='19.5'
+            transform='rotate(135 16.1595 15.6291)'
+            fill='#0F0F0F'
+        />
+        <Rect
+            x='15.6291'
+            y='1.84054'
+            width='0.75'
+            height='19.5'
+            transform='rotate(45 15.6291 1.84054)'
+            fill='#0F0F0F'
+        />
+    </Svg>
+);
+
+export const PlayBackIcon = () => (
+    <Svg width={24} height={24} viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <Path
+            fillRule='evenodd'
+            clipRule='evenodd'
+            d='M7.62143 3.00956C9.85835 1.92013 12.4211 1.70373 14.809 2.40263C17.1969 3.10154 19.2385 4.66554 20.535 6.78914C21.8316 8.91275 22.2898 11.4434 21.8204 13.8868C21.3509 16.3302 19.9874 18.5109 17.9963 20.0028C16.0051 21.4947 13.5292 22.1908 11.0523 21.955C8.57542 21.7192 6.27538 20.5685 4.60146 18.7277C2.92755 16.8869 2 14.4881 2 12H3C3 14.2393 3.83479 16.3982 5.34131 18.0549C6.84784 19.7117 8.91788 20.7473 11.1471 20.9595C13.3763 21.1717 15.6046 20.5453 17.3966 19.2025C19.1887 17.8598 20.4158 15.8972 20.8383 13.6981C21.2609 11.4991 20.8484 9.22148 19.6815 7.31023C18.5147 5.39899 16.6772 3.99138 14.5281 3.36237C12.3789 2.73336 10.0725 2.92812 8.05929 3.90861C6.04606 4.8891 4.47067 6.58489 3.64082 8.66474L2.71202 8.29415C3.63407 5.98321 5.38452 4.099 7.62143 3.00956Z'
+            fill='#0F0F0F'
+        />
+        <Path fillRule='evenodd' clipRule='evenodd' d='M3 8V3H2V9H8V8H3Z' fill='#0F0F0F' />
+        <Path
+            fillRule='evenodd'
+            clipRule='evenodd'
+            d='M10 7.25H12V12.724L15.5665 15.176L14.4335 16.824L10 13.776V7.25Z'
+            fill='#0F0F0F'
+        />
+    </Svg>
+);
+
+export const JumpIcon = () => (
+    <Svg width={20} height={20} viewBox='0 0 20 20' fill='none' xmlns='http://www.w3.org/2000/Svg'>
+        <Path
+            fillRule='evenodd'
+            clipRule='evenodd'
+            d='M3.75 3.75H14.5833V4.58333H4.58333V14.5833H3.75V3.75Z'
+            fill='#1B1B1B'
+        />
+        <Path
+            fillRule='evenodd'
+            clipRule='evenodd'
+            d='M15.5387 16.1279L3.87207 4.46126L4.46133 3.87201L16.128 15.5387L15.5387 16.1279Z'
+            fill='#1B1B1B'
         />
     </Svg>
 );
