@@ -1,4 +1,4 @@
-import Svg, { Path } from 'react-native-svg';
+import Svg, { Circle, Path, G, Defs, Rect, ClipPath } from 'react-native-svg';
 
 export const LogoIcon = () => (
     <Svg width='27' height='20' viewBox='0 0 27 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -95,4 +95,99 @@ export const SearchIcon = () => (
     </Svg>
 );
 
+export const AddCircleIcon = ({ color = '#0F0F0F' }) => (
+    <Svg width={39} height={38} viewBox='0 0 39 38' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <Circle cx='19.5' cy={19} r='15.3333' stroke={color} />
+        <Path d='M10.7917 17.8125H28.2083V20.1875H10.7917V17.8125Z' fill={color} />
+        <Path d='M20.6875 10.2916L20.6875 27.7083L18.3125 27.7083L18.3125 10.2916L20.6875 10.2916Z' fill={color} />
+    </Svg>
+);
+
+export const ShortIcon = ({ color = '#0F0F0F' }) => (
+    <Svg width={25} height={24} viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <G clipPath='url(#clip0_2413_128)'>
+            <Path
+                fillRule='evenodd'
+                clipRule='evenodd'
+                d='M7.0556 8.11184C5.62072 8.94027 5.12909 10.775 5.95752 12.2099C6.38817 12.9558 7.0899 13.4466 7.86778 13.63C8.0673 13.6771 8.21789 13.8411 8.24772 14.0439C8.27755 14.2467 8.18056 14.4472 8.00304 14.5497L6.80562 15.241C5.37074 16.0694 4.87911 17.9042 5.70754 19.3391C6.53597 20.774 8.37074 21.2656 9.80562 20.4372L17.5998 15.9372C19.0347 15.1087 19.5263 13.274 18.6979 11.8391C18.2673 11.0932 17.5655 10.6024 16.7877 10.419C16.5881 10.372 16.4375 10.2079 16.4077 10.0051C16.3779 9.80228 16.4749 9.60182 16.6524 9.49932L17.8498 8.80799C19.2847 7.97956 19.7763 6.14479 18.9479 4.70991C18.1195 3.27504 16.2847 2.78341 14.8498 3.61184L7.0556 8.11184ZM5.0915 12.7099C3.98693 10.7967 4.64243 8.35038 6.5556 7.24581L14.3498 2.74581C16.263 1.64124 18.7094 2.29674 19.8139 4.20991C20.9185 6.12308 20.263 8.56945 18.3498 9.67402L18.0509 9.8466C18.6606 10.1865 19.1895 10.6906 19.5639 11.3391C20.6685 13.2523 20.013 15.6986 18.0998 16.8032L10.3056 21.3032C8.39245 22.4078 5.94608 21.7523 4.84151 19.8391C3.73694 17.9259 4.39245 15.4796 6.30562 14.375L6.60454 14.2024C5.99483 13.8625 5.46589 13.3584 5.0915 12.7099Z'
+                fill={color}
+            />
+            <Path d='M15.5 12.0001L11 14.5981L11 9.40198L15.5 12.0001Z' fill={color} />
+        </G>
+        <Defs>
+            <ClipPath id='clip0_2413_128'>
+                <Rect width={24} height={24} fill='white' transform='translate(0.5)' />
+            </ClipPath>
+        </Defs>
+    </Svg>
+);
+
+export const SubscriptionIcon = ({ color = '#0F0F0F' }) => (
+    <Svg width={25} height={24} viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <Path d='M15 15.0001L10.5 17.5981L10.5 12.402L15 15.0001Z' fill={color} />
+        <Path fillRule='evenodd' clipRule='evenodd' d='M2.5 9H22.5V21H2.5V9ZM3.5 10V20H21.5V10H3.5Z' fill={color} />
+        <Path d='M4.5 6H20.5V7H4.5V6Z' fill={color} />
+        <Path d='M7.5 3H17.5V4H7.5V3Z' fill={color} />
+    </Svg>
+);
+export const LibraryIcon = ({ color = '#0F0F0F' }) => (
+    <Svg width={25} height={24} viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <Path fillRule='evenodd' clipRule='evenodd' d='M6.5 3H21.5V18H6.5V3ZM7.5 4V17H20.5V4H7.5Z' fill={color} />
+        <Path d='M17.5 10.5L11.5 13.9641L11.5 7.03589L17.5 10.5Z' fill={color} />
+        <Path fillRule='evenodd' clipRule='evenodd' d='M3.5 6.5H4.5V20H18V21H3.5V6.5Z' fill={color} />
+    </Svg>
+);
+export const HomeIcon = ({ color = '#0F0F0F' }) => (
+    <Svg width={25} height={24} viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <Path
+            fillRule='evenodd'
+            clipRule='evenodd'
+            d='M9.5 14H15.5V20H19.5V10.4538L12.5 4.32877L5.5 10.4538V20H9.5V14ZM4.5 10L12.5 3L20.5 10V21H14.5V15H10.5V21H4.5V10Z'
+            fill={color}
+        />
+    </Svg>
+);
+export const HomeFocusIcon = () => (
+    <Svg width={25} height={24} viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <Path
+            fillRule='evenodd'
+            clipRule='evenodd'
+            d='M12.5 3L4.5 10V21H10.5V15H14.5V21H20.5V10L12.5 3Z'
+            fill='#0F0F0F'
+        />
+    </Svg>
+);
+export const LibraryFocusIcon = () => (
+    <Svg width={25} height={24} viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <Path
+            fillRule='evenodd'
+            clipRule='evenodd'
+            d='M21.5 3H6.5V18H21.5V3ZM11.5 13.9641L17.5 10.5L11.5 7.0359L11.5 13.9641Z'
+            fill='#0F0F0F'
+        />
+        <Path fillRule='evenodd' clipRule='evenodd' d='M3.5 6.5H4.5V20H18V21H3.5V6.5Z' fill='#0F0F0F' />
+    </Svg>
+);
+export const SubscriptionFocusIcon = () => (
+    <Svg width={25} height={24} viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <Path d='M4.5 6H20.5V7H4.5V6Z' fill='#0F0F0F' />
+        <Path d='M7.5 3H17.5V4H7.5V3Z' fill='#0F0F0F' />
+        <Path
+            fillRule='evenodd'
+            clipRule='evenodd'
+            d='M22.5 9H2.5V21H22.5V9ZM10.5 17.5981L15 15L10.5 12.4019V17.5981Z'
+            fill='#0F0F0F'
+        />
+    </Svg>
+);
+export const ShortFocusIcon = () => (
+    <Svg width={25} height={24} viewBox='0 0 25 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <Path
+            fillRule='evenodd'
+            clipRule='evenodd'
+            d='M6.55558 7.24567C4.64241 8.35024 3.98691 10.7966 5.09148 12.7098C5.46588 13.3582 5.99481 13.8623 6.60453 14.2023L6.3056 14.3748C4.39243 15.4794 3.73693 17.9258 4.8415 19.8389C5.94607 21.7521 8.39243 22.4076 10.3056 21.3031L18.0998 16.8031C20.013 15.6985 20.6685 13.2521 19.5639 11.339C19.1895 10.6905 18.6606 10.1864 18.0509 9.84646L18.3498 9.67388C20.263 8.56931 20.9185 6.12295 19.8139 4.20977C18.7093 2.2966 16.263 1.6411 14.3498 2.74567L6.55558 7.24567ZM11 14.5981L15.5 12L11 9.40191L11 14.5981Z'
+            fill='white'
+        />
+    </Svg>
+);
 // export const YouTubeIcon = () => ()
