@@ -2,6 +2,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import uuid from 'react-native-uuid';
 import Home from '~/screens/home';
+import Short from '~/screens/shorts';
+import Add from '~/screens/add';
+import Subcription from '~/screens/subscription';
+import Library from '~/screens/library';
 import Search from '~/screens/search';
 import Subscriptions from '~/screens/subscriptions';
 
@@ -16,6 +20,26 @@ const screens = [
         },
     },
     {
+        name: 'shorts',
+        component: Short,
+        options: {
+            title: 'Shorts',
+        },
+    },
+    {
+        name: 'add',
+        component: Add,
+        options: {
+            title: 'Add',
+        },
+    },
+    {
+        name: 'library',
+        component: Library,
+        options: {
+            title: 'Library',
+      },
+      {
         name: 'subscriptions',
         component: Subscriptions,
         options: {

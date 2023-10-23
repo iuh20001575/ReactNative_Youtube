@@ -7,6 +7,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+        position: 'relative',
+    },
+    scroll: {
+        paddingBottom: 48,
     },
     body: {
         flex: 1,
