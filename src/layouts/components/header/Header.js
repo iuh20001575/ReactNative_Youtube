@@ -21,10 +21,7 @@ const Header = () => {
                     <SearchIcon />
                 </Pressable>
                 <Pressable>
-                    <Image
-                        style={styles.avatar}
-                        source={require('../../../../assets/373558389_724463569726207_155636590546417458_n.jpg')}
-                    />
+                    <Image style={styles.avatar} source={require('../../../../assets/avatar.jpg')} />
                 </Pressable>
             </View>
         </View>

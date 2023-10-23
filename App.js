@@ -3,10 +3,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import uuid from 'react-native-uuid';
 import Home from '~/screens/home';
 import Short from '~/screens/shorts';
-import Add from './src/screens/add/Add';
-import Subcription from './src/screens/subscription/Subscription';
-import Library from './src/screens/library/Library';
-import Subscription from './src/screens/subscription/Subscription';
+import Add from '~/screens/add';
+import Subcription from '~/screens/subscription';
+import Library from '~/screens/library';
+import Search from '~/screens/search';
+import Subscriptions from '~/screens/subscriptions';
 
 const Stack = createNativeStackNavigator();
 
@@ -33,17 +34,23 @@ const screens = [
         },
     },
     {
-        name: 'subscription',
-        component: Subscription,
-        options: {
-            title: 'Subscription',
-        },
-    },
-    {
         name: 'library',
         component: Library,
         options: {
             title: 'Library',
+      },
+      {
+        name: 'subscriptions',
+        component: Subscriptions,
+        options: {
+            title: 'Subscriptions',
+        },
+    },
+    {
+        name: 'search',
+        component: Search,
+        options: {
+            title: 'Search',
         },
     },
 ];
@@ -51,9 +58,10 @@ const screens = [
 export default function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName='home'>
+            <Stack.Navigator initialRouteName='search'>
                 {screens.map((screen) => (
                     <Stack.Screen
+                        initialParams={{ filter: 'All' }}
                         key={uuid.v4()}
                         name={screen.name}
                         component={screen.component}
