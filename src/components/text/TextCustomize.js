@@ -8,10 +8,14 @@ import { useRobotoFonts } from '~/hooks';
  * @param {fontWeight} fontWeight 100 | 200 | 300 | 400 | 500 | 600 | 700
  * @returns
  */
-const TextCustomize = ({ size = 'md', fontWeight = '400', style = [], children, ...props }) => {
-    const font = useRobotoFonts();
+const TextCustomize = ({ size = 'md', fontWeight = 400, style = [], children, ...props }) => {
+    const font = useRobotoFonts(fontWeight);
     const styles = useMemo(() => {
         const styles = Array.isArray(style) ? style : [style];
+
+        styles.unshift({
+            color: '#0F0F0F',
+        });
 
         switch (size) {
             case 'xxs':
@@ -57,9 +61,7 @@ const TextCustomize = ({ size = 'md', fontWeight = '400', style = [], children, 
                 });
         }
 
-        styles.push({ fontWeight });
-
-        styles.push(font);
+        styles.push({ fontWeight }, font);
 
         return styles;
     }, [style, font]);

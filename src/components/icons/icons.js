@@ -1,4 +1,4 @@
-import Svg, { Path } from 'react-native-svg';
+import Svg, { Circle, Path } from 'react-native-svg';
 
 export const LogoIcon = () => (
     <Svg width='27' height='20' viewBox='0 0 27 20' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -108,6 +108,31 @@ export const ExploreIcon = () => (
             clipRule='evenodd'
             d='M17.5578 5.49766L9.76354 9.99766L6.58109 18.7633L14.4956 14.1938L17.5578 5.49766ZM12.7461 13.3864C13.4978 13.0382 13.825 12.1466 13.4768 11.3949C13.1286 10.6432 12.237 10.316 11.4853 10.6642C10.7336 11.0123 10.4064 11.904 10.7546 12.6557C11.1028 13.4074 11.9944 13.7345 12.7461 13.3864Z'
             fill='#0F0F0F'
+        />
+    </Svg>
+);
+
+export const MoreIcon = ({ fill = '#131313' }) => (
+    <Svg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <Circle cx='8' cy='4' r='1' fill={fill} />
+        <Circle cx='8' cy='8' r='1' fill={fill} />
+        <Circle cx='8' cy='12' r='1' fill={fill} />
+    </Svg>
+);
+
+export const ShortsRedIcon = () => (
+    <Svg width={24} height={24} viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'>
+        <Path
+            fillRule='evenodd'
+            clipRule='evenodd'
+            d='M6.05564 7.24567C4.14247 8.35024 3.48697 10.7966 4.59154 12.7098C4.96594 13.3582 5.49487 13.8623 6.10459 14.2023L5.80566 14.3748C3.89249 15.4794 3.23699 17.9258 4.34156 19.8389C5.44613 21.7521 7.89249 22.4076 9.80566 21.3031L17.5999 16.8031C19.5131 15.6985 20.1686 13.2521 19.064 11.339C18.6896 10.6905 18.1607 10.1864 17.5509 9.84646L17.8499 9.67388C19.763 8.56931 20.4185 6.12295 19.314 4.20977C18.2094 2.2966 15.763 1.6411 13.8499 2.74567L6.05564 7.24567ZM10.5 14.5981L15 12L10.5 9.40191L10.5 14.5981Z'
+            fill='#FF0000'
+        />
+        <Path
+            fillRule='evenodd'
+            clipRule='evenodd'
+            d='M10.4999 14.5981L14.9999 12.0001L10.4999 9.40198L10.4999 14.5981Z'
+            fill='white'
         />
     </Svg>
 );
