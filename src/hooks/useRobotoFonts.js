@@ -1,11 +1,20 @@
-import { useFonts, Roboto_400Regular } from '@expo-google-fonts/roboto';
+import { Roboto_400Regular, Roboto_500Medium, useFonts } from '@expo-google-fonts/roboto';
 
-function useRobotoFonts() {
-    const [loaded] = useFonts({ Roboto_400Regular });
+function getWeight(fontWeight) {
+    switch (+fontWeight) {
+        case 500:
+            return 'Medium';
+        default:
+            return 'Regular';
+    }
+}
+
+function useRobotoFonts(weight = 400) {
+    const [loaded] = useFonts({ Roboto_500Medium, Roboto_400Regular });
 
     if (loaded)
         return {
-            fontFamily: 'Roboto_400Regular, sans-serif',
+            fontFamily: `Roboto_${weight}${getWeight(weight)}`,
         };
 
     return {};
