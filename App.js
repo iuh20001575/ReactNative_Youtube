@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import uuid from 'react-native-uuid';
 import Home from '~/screens/home';
+import Search from '~/screens/search';
 import Subscriptions from '~/screens/subscriptions';
 
 const Stack = createNativeStackNavigator();
@@ -21,12 +22,19 @@ const screens = [
             title: 'Subscriptions',
         },
     },
+    {
+        name: 'search',
+        component: Search,
+        options: {
+            title: 'Search',
+        },
+    },
 ];
 
 export default function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName='subscriptions'>
+            <Stack.Navigator initialRouteName='search'>
                 {screens.map((screen) => (
                     <Stack.Screen
                         initialParams={{ filter: 'All' }}
