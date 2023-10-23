@@ -52,7 +52,6 @@ const videos = [
 ];
 
 const Home = ({ route }) => {
-    console.log('🚀 ~ Home ~ route:', route);
     return (
         <DefaultLayout>
             {/* Filter */}

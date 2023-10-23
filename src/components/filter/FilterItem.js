@@ -33,7 +33,7 @@ const FilterItem = ({ data, isFirst }) => {
             return;
         }
 
-        navigation.navigate('home', { filter: data.title });
+        navigation.navigate(route.name, { filter: data.title });
     };
 
     return (
