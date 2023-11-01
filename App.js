@@ -8,6 +8,7 @@ import Library from '~/screens/library';
 import Search from '~/screens/search';
 import Short from '~/screens/shorts';
 import Subscriptions from '~/screens/subscriptions';
+import { ThemeProvider } from './src/context/themeContext';
 
 const Stack = createNativeStackNavigator();
 
@@ -65,18 +66,20 @@ const screens = [
 
 export default function App() {
     return (
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName='home'>
-                {screens.map((screen) => (
-                    <Stack.Screen
-                        initialParams={{ filter: 'All' }}
-                        key={uuid.v4()}
-                        name={screen.name}
-                        component={screen.component}
-                        options={{ headerShown: false, ...screen.options }}
-                    />
-                ))}
-            </Stack.Navigator>
-        </NavigationContainer>
+        <ThemeProvider>
+            <NavigationContainer>
+                <Stack.Navigator initialRouteName='home'>
+                    {screens.map((screen) => (
+                        <Stack.Screen
+                            initialParams={{ filter: 'All' }}
+                            key={uuid.v4()}
+                            name={screen.name}
+                            component={screen.component}
+                            options={{ headerShown: false, ...screen.options }}
+                        />
+                    ))}
+                </Stack.Navigator>
+            </NavigationContainer>
+        </ThemeProvider>
     );
 }

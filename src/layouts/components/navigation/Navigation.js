@@ -1,8 +1,7 @@
-import { View, Text, Pressable } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
-import styles from './styles';
-import { NavigationContainer, useNavigation, useRoute } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Pressable, View } from 'react-native';
+import uuid from 'react-native-uuid';
 import TextCustomize from '~/components/text';
 import {
     AddCircleIcon,
@@ -12,15 +11,13 @@ import {
     LibraryIcon,
     ShortFocusIcon,
     ShortIcon,
-    SubcriptionFocusIcon,
-    SubcriptionIcon,
     SubscriptionFocusIcon,
     SubscriptionIcon,
 } from '../../../components/icons/icons';
-import uuid from 'react-native-uuid';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import useTheme from '../../../context/themeContext';
+import styles from './styles';
 
-const navigations = [
+const navigationList = [
     {
         name: 'home',
         title: 'Home',
@@ -58,20 +55,25 @@ const black = '#0f0f0f';
 
 const Navigation = ({}) => {
     const navigation = useNavigation();
-    const insets = useSafeAreaInsets();
     const route = useRoute();
-    const isShorts = route.name === 'shorts';
+    const { dark } = useTheme();
 
     return (
-        <View style={[styles.container, { paddingBottom: insets.bottom + 5 }, isShorts && { backgroundColor: black }]}>
-            {navigations.map((item) => {
+        <View
+            style={[styles.container, dark && { backgroundColor: black, borderTopColor: 'rgba(255, 255, 255, 0.1)' }]}
+        >
+            {navigationList.map((item) => {
                 const Icon = route.name === item.name ? item.activeIcon : item.icon;
 
                 return (
                     <Pressable key={uuid.v4()} style={styles.style1} onPress={() => navigation.navigate(item.name)}>
-                        <Icon color={isShorts ? white : black} />
+                        <View style={styles.icon}>
+                            <Icon color={dark ? white : black} />
+                        </View>
                         {!item.title || (
-                            <TextCustomize style={{ color: isShorts ? white : black }}>{item.title}</TextCustomize>
+                            <TextCustomize numberOfLines={1} size='xxs' style={{ color: dark ? white : black }}>
+                                {item.title}
+                            </TextCustomize>
                         )}
                     </Pressable>
                 );
