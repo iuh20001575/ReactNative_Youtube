@@ -1,0 +1,24 @@
+import { ResizeMode, Video } from 'expo-av';
+import React from 'react';
+import Poster from './Poster';
+import styles from './styles';
+
+const VideoCustomize = ({ video, ...props }) => {
+    return (
+        <Video
+            PosterComponent={Poster}
+            usePoster={video.posterUrl}
+            posterSource={{
+                uri: video.posterUrl,
+            }}
+            posterStyle={[styles.poster]}
+            resizeMode={ResizeMode.STRETCH}
+            videoStyle={styles.video}
+            style={styles.videoContainer}
+            source={{ uri: video.videoUrl }}
+            {...props}
+        />
+    );
+};
+
+export default VideoCustomize;
