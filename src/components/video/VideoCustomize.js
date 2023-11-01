@@ -1,11 +1,13 @@
 import { ResizeMode, Video } from 'expo-av';
 import React from 'react';
+import Poster from './Poster';
 import styles from './styles';
 
 const VideoCustomize = ({ video, ...props }) => {
     return (
         <Video
-            usePoster={video.posterUrl && Platform.OS !== 'web'}
+            PosterComponent={Poster}
+            usePoster={video.posterUrl}
             posterSource={{
                 uri: video.posterUrl,
             }}

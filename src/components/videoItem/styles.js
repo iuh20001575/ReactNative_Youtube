@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         height: '100%',
         objectFit: 'cover',
     },
-    duration: {
+    durationView: {
         position: 'absolute',
         right: 8,
         bottom: 8,
@@ -18,6 +18,8 @@ const styles = StyleSheet.create({
         paddingVertical: 3,
         borderRadius: 4,
         backgroundColor: 'rgba(0, 0, 0, 0.55)',
+    },
+    duration: {
         color: '#fff',
     },
     body: {

@@ -18,9 +18,11 @@ const VideoItem = ({ video }) => {
                         setDuration(Math.floor(Platform.OS === 'web' ? e.target.duration : e.durationMillis / 1000));
                     }}
                 />
-                <TextCustomize size='xs' style={styles.duration}>
-                    {formatTimeVideo(duration)}
-                </TextCustomize>
+                <View style={styles.durationView}>
+                    <TextCustomize size='xs' style={styles.duration}>
+                        {formatTimeVideo(duration)}
+                    </TextCustomize>
+                </View>
             </View>
             <View style={styles.body}>
                 <Pressable style={styles.avatarBtn}>
@@ -36,7 +38,7 @@ const VideoItem = ({ video }) => {
                     <TextCustomize size='md' style={styles.title}>
                         {video.title}
                     </TextCustomize>
-                    <TextCustomize size='xs' style={styles.desc}>
+                    <TextCustomize numberOfLines={2} size='xs' style={styles.desc}>
                         {video.channelName} · {formatView(video.views)} · {formatRelativeTime(new Date(video.date))}{' '}
                     </TextCustomize>
                 </View>
