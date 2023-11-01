@@ -18,12 +18,14 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
     },
-    itemTitle: {
+    title: {
+        padding: 8,
         position: 'absolute',
         bottom: 0,
         left: 0,
         right: 0,
-        padding: 8,
+    },
+    itemTitle: {
         color: '#fff',
         textShadowColor: 'rgba(0, 0, 0, 0.25)',
         textShadowOffset: {
