@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
     scroll: {
-        paddingBottom: 48,
+        paddingBottom: 49,
     },
     body: {
         flex: 1,
