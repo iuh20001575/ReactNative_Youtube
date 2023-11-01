@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
-    video: {
+    videoWrapper: {
         aspectRatio: 1.7,
         position: 'relative',
     },

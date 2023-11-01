@@ -67,7 +67,7 @@ const TextCustomize = ({ size = 'md', fontWeight = 400, style = [], children, ..
     }, [style, font]);
 
     return (
-        <Text style={styles} {...props}>
+        <Text selectable={false} style={styles} {...props}>
             {children}
         </Text>
     );
