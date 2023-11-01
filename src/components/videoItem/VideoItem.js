@@ -1,7 +1,7 @@
-import { ResizeMode, Video } from 'expo-av';
 import React, { useState } from 'react';
 import { Image, Platform, Pressable, View } from 'react-native';
 import TextCustomize from '~/components/text';
+import VideoCustomize from '~/components/video';
 import { formatRelativeTime, formatTimeVideo, formatView } from '~/utils';
 import { MoreIcon } from '../icons';
 import styles from './styles';
@@ -11,20 +11,12 @@ const VideoItem = ({ video }) => {
 
     return (
         <Pressable>
-            <View style={styles.video}>
-                <Video
-                    usePoster={video.posterUrl && Platform.OS !== 'web'}
-                    posterSource={{
-                        uri: video.posterUrl,
-                    }}
-                    posterStyle={[styles.poster]}
+            <View style={styles.videoWrapper}>
+                <VideoCustomize
+                    video={video}
                     onLoad={(e) => {
                         setDuration(Math.floor(Platform.OS === 'web' ? e.target.duration : e.durationMillis / 1000));
                     }}
-                    resizeMode={ResizeMode.STRETCH}
-                    videoStyle={{ flex: 1, width: '100%', height: '100%' }}
-                    style={{ flex: 1, width: '100%' }}
-                    source={{ uri: video.videoUrl }}
                 />
                 <TextCustomize size='xs' style={styles.duration}>
                     {formatTimeVideo(duration)}

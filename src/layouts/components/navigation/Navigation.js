@@ -40,8 +40,8 @@ const navigations = [
         activeIcon: AddCircleIcon,
     },
     {
-        name: 'subscription',
-        title: 'Subscription',
+        name: 'subscriptions',
+        title: 'Subscriptions',
         icon: SubscriptionIcon,
         activeIcon: SubscriptionFocusIcon,
     },
@@ -70,7 +70,7 @@ const Navigation = ({}) => {
                 return (
                     <Pressable key={uuid.v4()} style={styles.style1} onPress={() => navigation.navigate(item.name)}>
                         <Icon color={isShorts ? white : black} />
-                        {item.title && (
+                        {!item.title || (
                             <TextCustomize style={{ color: isShorts ? white : black }}>{item.title}</TextCustomize>
                         )}
                     </Pressable>

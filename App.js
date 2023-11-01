@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import uuid from 'react-native-uuid';
 import Add from '~/screens/add';
+import DetailVideo from '~/screens/detailVideo';
 import Home from '~/screens/home';
 import Library from '~/screens/library';
 import Search from '~/screens/search';
@@ -51,6 +52,13 @@ const screens = [
         component: Search,
         options: {
             title: 'Search',
+        },
+    },
+    {
+        name: 'detail-video',
+        component: DetailVideo,
+        options: {
+            title: 'Detail video',
         },
     },
 ];
