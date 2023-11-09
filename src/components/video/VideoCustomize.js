@@ -3,7 +3,7 @@ import React from 'react';
 import Poster from './Poster';
 import styles from './styles';
 
-const VideoCustomize = ({ video, ...props }) => {
+const VideoCustomize = ({ video, videoRef, ...props }) => {
     return (
         <Video
             PosterComponent={Poster}
@@ -17,6 +17,7 @@ const VideoCustomize = ({ video, ...props }) => {
             style={styles.videoContainer}
             source={{ uri: video.videoUrl }}
             {...props}
+            ref={videoRef}
         />
     );
 };

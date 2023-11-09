@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { Image, Platform, Pressable, View } from 'react-native';
 import TextCustomize from '~/components/text';
@@ -8,9 +9,16 @@ import styles from './styles';
 
 const VideoItem = ({ video }) => {
     const [duration, setDuration] = useState(0);
+    const navigation = useNavigation();
+
+    const handleClick = () =>
+        navigation.navigate('detail-video', {
+            video,
+            duration,
+        });
 
     return (
-        <Pressable>
+        <Pressable onPress={handleClick}>
             <View style={styles.videoWrapper}>
                 <VideoCustomize
                     video={video}
