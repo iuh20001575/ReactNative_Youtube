@@ -17,6 +17,7 @@
             -   [Filter Music](#filter-music)
             -   [Scroll](#scroll)
         -   [Subscriptions screen](#subscriptions-screen)
+        -   [Search screen](#search-screen)
     -   [Authors](#authors)
 
 ## Features
@@ -76,6 +77,10 @@ Start project
 ### Subscriptions screen
 
 ![Subscriptions](./demo/ReactNative_Youtube_Subscriptions.png)
+
+### Search screen
+
+![Search](./demo/ReactNative_Youtube_Search.png)
 
 ## Authors
 

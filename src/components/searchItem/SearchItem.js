@@ -5,16 +5,16 @@ import useSearch from '../../hooks/useSearch';
 import { JumpIcon, PlayBackIcon, SearchIcon } from '../icons/icons';
 import styles from './styles';
 
-const SearchItem = ({ value, isHistory = false }) => {
+const SearchItem = ({ data }) => {
     const { setValue } = useSearch();
 
     return (
         <Pressable onLongPress={() => {}} style={styles.container}>
-            <Pressable style={styles.playBackBtn}>{(isHistory && <PlayBackIcon />) || <SearchIcon />}</Pressable>
-            <TextCustomize fontWeight={500} size='md' style={styles.title}>
-                {value}
+            <Pressable style={styles.playBackBtn}>{(data.isHistory && <PlayBackIcon />) || <SearchIcon />}</Pressable>
+            <TextCustomize numberOfLines={2} fontWeight={500} size='md' style={styles.title}>
+                {data.title}
             </TextCustomize>
-            <Image style={styles.image} source={require('../../../assets/searchItem.png')} />
+            {!data.image || <Image style={styles.image} source={{ uri: data.image }} />}
             <Pressable onPress={() => setValue(value)} style={styles.jumpBtn}>
                 <JumpIcon />
             </Pressable>
