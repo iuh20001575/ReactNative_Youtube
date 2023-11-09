@@ -5,53 +5,11 @@ import Filter from '~/components/filter';
 import SubscriptionChannel from '~/components/subscriptionChannel';
 import TextCustomize from '~/components/text';
 import VideoItem from '~/components/videoItem';
-import videosData from '../../data/videos';
 import DefaultLayout from '~/layouts/defaultLayout';
-import styles from './styles';
 import { FilterProvider } from '../../context/filterContext';
-
-const data = [
-    {
-        avatar: require('../../../assets/avatar.jpg'),
-        status: 'online',
-        name: 'F8 Official',
-    },
-    {
-        avatar: require('../../../assets/avatar.jpg'),
-        status: 'online',
-        name: 'F8 Official',
-    },
-    {
-        avatar: require('../../../assets/avatar.jpg'),
-        status: 'online',
-        name: 'F8 Official',
-    },
-    {
-        avatar: require('../../../assets/avatar.jpg'),
-        status: 'online',
-        name: 'F8 Official',
-    },
-    {
-        avatar: require('../../../assets/avatar.jpg'),
-        status: 'online',
-        name: 'F8 Official',
-    },
-    {
-        avatar: require('../../../assets/avatar.jpg'),
-        status: 'online',
-        name: 'F8 Official',
-    },
-    {
-        avatar: require('../../../assets/avatar.jpg'),
-        status: 'online',
-        name: 'F8 Official',
-    },
-    {
-        avatar: require('../../../assets/avatar.jpg'),
-        status: 'online',
-        name: 'F8 Official',
-    },
-];
+import { channels } from '../../data';
+import videosData from '../../data/videos';
+import styles from './styles';
 
 const filers = [
     {
@@ -90,7 +48,7 @@ const Subscriptions = () => {
                         showsHorizontalScrollIndicator={false}
                         horizontal
                         keyExtractor={() => uuid.v4()}
-                        data={data}
+                        data={channels}
                         renderItem={({ item }) => <SubscriptionChannel data={item} />}
                     />
                     <Pressable style={styles.allChannelBtn}>

@@ -11,6 +11,12 @@
     -   [Tech Stack](#tech-stack)
     -   [Run Locally](#run-locally)
     -   [Demo](#demo)
+        -   [Home screen](#home-screen)
+            -   [Filter All](#filter-all)
+            -   [Filter New to you](#filter-new-to-you)
+            -   [Filter Music](#filter-music)
+            -   [Scroll](#scroll)
+        -   [Subscriptions screen](#subscriptions-screen)
     -   [Authors](#authors)
 
 ## Features
@@ -66,6 +72,10 @@ Start project
 #### Scroll
 
 ![Home 04](./demo/ReactNative_Youtube_Home_04.png)
+
+### Subscriptions screen
+
+![Subscriptions](./demo/ReactNative_Youtube_Subscriptions.png)
 
 ## Authors
 
