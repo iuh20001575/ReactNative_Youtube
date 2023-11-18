@@ -1,8 +1,8 @@
-function formatView(count) {
-    if (count >= 1000000000) return (count / 1000000000).toFixed(1) + 'B views';
-    if (count >= 1000000) return (count / 1000000).toFixed(1) + 'M views';
-    if (count >= 1000) return (count / 1000).toFixed(1) + 'K views';
-    return count + ' views';
+function formatView(count, isShowView = true) {
+    if (count >= 1000000000) return (count / 1000000000).toFixed(1) + `B${isShowView ? ' views' : ''}`;
+    if (count >= 1000000) return (count / 1000000).toFixed(1) + `M${isShowView ? ' views' : ''}`;
+    if (count >= 1000) return (count / 1000).toFixed(1) + `K${isShowView ? ' views' : ''}`;
+    return count + `${isShowView ? ' views' : ''}`;
 }
 
 export default formatView;

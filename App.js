@@ -68,7 +68,7 @@ export default function App() {
     return (
         <ThemeProvider>
             <NavigationContainer>
-                <Stack.Navigator initialRouteName='home'>
+                <Stack.Navigator initialRouteName='shorts'>
                     {screens.map((screen) => (
                         <Stack.Screen
                             initialParams={{ filter: 'All' }}
