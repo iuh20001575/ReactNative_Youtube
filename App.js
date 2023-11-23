@@ -1,14 +1,16 @@
+import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import uuid from 'react-native-uuid';
+import { Provider } from 'react-redux';
 import Add from '~/screens/add';
-import DetailVideo from '~/screens/detailVideo';
 import Home from '~/screens/home';
 import Library from '~/screens/library';
 import Search from '~/screens/search';
 import Short from '~/screens/shorts';
 import Subscriptions from '~/screens/subscriptions';
-import { ThemeProvider } from './src/context/themeContext';
+import { store } from './src/app/store';
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +21,7 @@ const screens = [
         options: {
             title: 'YouTube',
         },
+        initialParams: { filter: 'All' },
     },
     {
         name: 'shorts',
@@ -47,6 +50,7 @@ const screens = [
         options: {
             title: 'Subscriptions',
         },
+        initialParams: { filter: 'All' },
     },
     {
         name: 'search',
@@ -55,31 +59,22 @@ const screens = [
             title: 'Search',
         },
     },
-    {
-        name: 'detail-video',
-        component: DetailVideo,
-        options: {
-            title: 'Detail video',
-        },
-    },
 ];
 
 export default function App() {
     return (
-        <ThemeProvider>
-            <NavigationContainer>
-                <Stack.Navigator initialRouteName='home'>
-                    {screens.map((screen) => (
-                        <Stack.Screen
-                            initialParams={{ filter: 'All' }}
-                            key={uuid.v4()}
-                            name={screen.name}
-                            component={screen.component}
-                            options={{ headerShown: false, ...screen.options }}
-                        />
-                    ))}
-                </Stack.Navigator>
-            </NavigationContainer>
-        </ThemeProvider>
+        <GestureHandlerRootView style={{ flex: 1 }}>
+            <BottomSheetModalProvider>
+                <Provider store={store}>
+                    <NavigationContainer>
+                        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='home'>
+                            {screens.map((screen) => (
+                                <Stack.Screen key={uuid.v4()} {...screen} />
+                            ))}
+                        </Stack.Navigator>
+                    </NavigationContainer>
+                </Provider>
+            </BottomSheetModalProvider>
+        </GestureHandlerRootView>
     );
 }

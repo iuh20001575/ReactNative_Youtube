@@ -3,11 +3,11 @@ import { Image, View } from 'react-native';
 import TextCustomize from '../../components/text';
 import styles from './styles';
 
-const Comment = ({ comment }) => {
+const Comment = ({ comment, lineText = 4 }) => {
     return (
         <View style={styles.comment}>
-            <Image source={comment.avatar} resizeMode='cover' style={styles.avatar} />
-            <TextCustomize numberOfLines={2} size='xs'>
+            <Image source={{ uri: comment.avatar }} resizeMode='cover' style={styles.avatar} />
+            <TextCustomize style={styles.text} numberOfLines={lineText} size='xs'>
                 {comment.comment}
             </TextCustomize>
         </View>

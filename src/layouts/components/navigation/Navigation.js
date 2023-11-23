@@ -2,6 +2,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
 import { Pressable, View } from 'react-native';
 import uuid from 'react-native-uuid';
+import { useSelector } from 'react-redux';
 import TextCustomize from '~/components/text';
 import {
     AddCircleIcon,
@@ -14,8 +15,8 @@ import {
     SubscriptionFocusIcon,
     SubscriptionIcon,
 } from '../../../components/icons/icons';
-import useTheme from '../../../context/themeContext';
 import styles from './styles';
+import { memo } from 'react';
 
 const navigationList = [
     {
@@ -56,7 +57,7 @@ const black = '#0f0f0f';
 const Navigation = ({}) => {
     const navigation = useNavigation();
     const route = useRoute();
-    const { dark } = useTheme();
+    const { dark } = useSelector((state) => state.theme);
 
     return (
         <View
@@ -82,4 +83,4 @@ const Navigation = ({}) => {
     );
 };
 
-export default Navigation;
+export default memo(Navigation);

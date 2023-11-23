@@ -13,6 +13,15 @@ module.exports = function (api) {
 
     return {
         presets: ['babel-preset-expo'],
-        plugins: [['babel-plugin-root-import', rootImportOpts]],
+        plugins: [
+            ['babel-plugin-root-import', rootImportOpts],
+            [
+                'module-resolver',
+                {
+                    extensions: ['.tsx', '.ts', '.js', '.json'],
+                },
+            ],
+            'react-native-reanimated/plugin',
+        ],
     };
 };
