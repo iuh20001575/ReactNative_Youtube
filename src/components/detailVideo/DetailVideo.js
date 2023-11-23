@@ -15,6 +15,7 @@ import Category from '~/components/category';
 import { comments, videos as videosData } from '../../data';
 import { formatView } from '../../utils';
 import Comment from '../comment/Comment';
+import Comments from '../comments/Comments';
 import { CutIcon, DislikeIcon, DownloadIcon, LikeIcon, SaveIcon, ShareIcon } from '../icons';
 import InfoVideo from '../infoVideo/InfoVideo';
 import PlayingVideo from '../playingVideo/PlayingVideo';
@@ -136,7 +137,7 @@ const DetailVideo = ({ selectedVideo }) => {
         return {
             width: interpolate(
                 translateY.value,
-                [(SIZES.height * 70) / 100, IMAGE_BOTTOM_DISTANCE],
+                [(SIZES.height * 70) / 100, (SIZES.height * 75) / 100],
                 [SIZES.width, IMAGE_WIDTH_COL],
                 {
                     extrapolateRight: Extrapolate.CLAMP,
@@ -172,6 +173,8 @@ const DetailVideo = ({ selectedVideo }) => {
 
     return (
         <Animated.View style={[translateStyle, styles.wrapper, { height: SIZES.height - top - bottom }]}>
+            <Comments isShow={isShowComment} setShow={setShowComment} />
+
             <View style={styles.playerContainer}>
                 <PanGestureHandler onGestureEvent={gestureHandler}>
                     <Animated.View>

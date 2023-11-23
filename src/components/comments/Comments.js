@@ -1,13 +1,18 @@
-import { BottomSheetBackdrop, BottomSheetModal, BottomSheetScrollView } from '@gorhom/bottom-sheet';
+import {
+    BottomSheetBackdrop,
+    BottomSheetModal,
+    BottomSheetScrollView,
+    BottomSheetTextInput,
+} from '@gorhom/bottom-sheet';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, View } from 'react-native';
 import { useSafeAreaFrame, useSafeAreaInsets } from 'react-native-safe-area-context';
 import uuid from 'react-native-uuid';
 import { comments } from '../../data';
+import Avatar from '../avatar/Avatar';
 import CommentDetail from '../commentDetail/CommentDetail';
 import { CloseIcon } from '../icons';
 import TextCustomize from '../text/TextCustomize';
-import CommentsHeader from './CommentsHeader';
 import styles from './styles';
 
 const Comments = ({ isShow, setShow }) => {
@@ -59,19 +64,19 @@ const Comments = ({ isShow, setShow }) => {
 
                 {/* Comments */}
                 <BottomSheetScrollView
-                    stickyHeaderIndices={[0]}
-                    invertStickyHeaders
+                    // stickyHeaderIndices={[0]}
+                    // invertStickyHeaders={true}
                     contentContainerStyle={styles.comments}
                     // StickyHeaderComponent={CommentsHeader}
                 >
-                    <CommentsHeader />
+                    {/* <CommentsHeader /> */}
                     {comments.map((item) => (
                         <CommentDetail key={uuid.v4()} comment={item} />
                     ))}
                 </BottomSheetScrollView>
 
                 {/* Comment */}
-                {/* <View style={[styles.comment, { paddingBottom: bottom }]}>
+                <View style={[styles.comment, { paddingBottom: bottom }]}>
                     <Avatar
                         source={{
                             uri: 'https://plus.unsplash.com/premium_photo-1698533323307-3b89a25aaadc?q=80&w=1888&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
@@ -82,7 +87,7 @@ const Comments = ({ isShow, setShow }) => {
                         placeholderTextColor='#606060'
                         style={styles.input}
                     />
-                </View> */}
+                </View>
             </View>
         </BottomSheetModal>
     );
