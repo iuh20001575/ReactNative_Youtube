@@ -1,55 +1,54 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+    flex1: {
+        flex: 1,
+    },
+    textColor: {
+        color: '#fff',
+    },
+
+    // Header
     headerLayout: {
         width: '100%',
-        height: 51,
-        justifyContent: 'center',
-        alignItems: 'flex-end',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         position: 'absolute',
         top: 0,
         left: 0,
     },
     headerIcon: {
-        width: 24,
-        height: 25,
-        marginRight: 12,
+        padding: 12,
     },
     bodyLayout: {
         width: '100%',
         position: 'relative',
-        marginTop: 0,
     },
-    actionLayout: {
-        // width: 36,
-        height: 336,
-        justifyContent: 'space-between',
+
+    videoWrapper: { position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 },
+    video: { width: '100%', height: '100%' },
+
+    musicWrapper: {
+        flexDirection: 'row',
+        gap: 8,
         alignItems: 'center',
-        gap: 24,
+    },
+
+    actionLayout: {
         position: 'absolute',
-        bottom: 75,
-        right: 14,
+        bottom: 63,
+        right: 4,
     },
     actionItem: {
-        // width: 36,
-        height: 48,
-        justifyContent: 'center',
         alignItems: 'center',
-    },
-    textAction: {
-        color: '#FFFFFF',
-        fontSize: 12,
-        marginTop: 4,
-    },
-    textRemix: {
-        color: '#FFFFFF',
-        opacity: 0.5,
+        gap: 4,
     },
     imageMusicLayout: {
         width: 40,
         height: 40,
         position: 'absolute',
-        bottom: 14,
+        bottom: 15,
         right: 10,
     },
     imageMusic: {
@@ -58,11 +57,11 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     infoLayout: {
-        width: 288,
-        height: 68,
+        paddingRight: 71,
         position: 'absolute',
         left: 16,
-        bottom: 13,
+        bottom: 15,
+        gap: 11,
     },
     chanelLayout: {
         height: 32,
