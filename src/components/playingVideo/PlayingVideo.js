@@ -22,7 +22,7 @@ import styles from './styles';
 let idDuration;
 let idShowAction;
 
-const PlayingVideo = ({ video, nextVideo }) => {
+const PlayingVideo = ({ video, nextVideo, translateY, handleClickSide }) => {
     const [currentDuration, setCurrentDuration] = useState(0);
     const [showActions, setShowActions] = useState(true);
     const [count, setCount] = useState(0);
@@ -31,9 +31,12 @@ const PlayingVideo = ({ video, nextVideo }) => {
     const { index, isPlaying } = useSelector((state) => state.playingVideo);
     const dispatch = useDispatch();
 
-    const handleClickVideo = (e) => {
-        setShowActions(true);
-        setCount(0);
+    const handleClickVideo = () => {
+        if (translateY?.value && translateY?.value > 0) handleClickSide();
+        else {
+            setShowActions(true);
+            setCount(0);
+        }
     };
 
     const handleClickActions = () => {

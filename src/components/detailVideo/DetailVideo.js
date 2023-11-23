@@ -178,7 +178,12 @@ const DetailVideo = ({ selectedVideo }) => {
                         <Pressable onPress={handleClickSide} style={styles.playerContainer}>
                             <Animated.View style={[imageStyle]}>
                                 {/* Video */}
-                                <PlayingVideo video={selectedVideo} nextVideo={videos[0]} />
+                                <PlayingVideo
+                                    video={selectedVideo}
+                                    nextVideo={videos[0]}
+                                    translateY={translateY}
+                                    handleClickSide={handleClickSide}
+                                />
                             </Animated.View>
 
                             <InfoSide selectedVideo={selectedVideo} />
