@@ -1,11 +1,14 @@
-import React from 'react';
+import React, { useMemo, useState } from 'react';
 import { View } from 'react-native';
+import uuid from 'react-native-uuid';
 import Filter from '~/components/filter';
 import { ExploreIcon, ShortsRedIcon } from '~/components/icons';
 import ShortImage from '~/components/shortImage';
 import TextCustomize from '~/components/text';
-import Video from '~/components/videoItem';
 import DefaultLayout from '~/layouts/defaultLayout';
+import Video from '../../components/videoItem/VideoItem';
+import { FilterProvider } from '../../context/filterContext';
+import videosData from '../../data/videos';
 import styles from './styles';
 
 const filters = [
@@ -30,59 +33,48 @@ const filters = [
     },
 ];
 
-const videos = [
-    {
-        videoUrl: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
-        posterUrl: '',
-        avatar: 'https://images.unsplash.com/photo-1696061416696-98cb5e9c3b2a?auto=format&fit=crop&q=80&w=1287&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        title: 'React Native vs Flutter - I built the same chat app with both',
-        channelName: 'Fireship',
-        views: 1600,
-        date: '2023-10-17',
-    },
-    {
-        videoUrl: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
-        posterUrl: '',
-        avatar: 'https://images.unsplash.com/photo-1696061416696-98cb5e9c3b2a?auto=format&fit=crop&q=80&w=1287&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        title: 'Niji/Masaki Suda - Stand By Me Doraemon 2 - lyrics [Kanji, Romaji, ENG]',
-        channelName: 'Hollow of Japan',
-        views: 1400000,
-        date: '2021-10-17',
-    },
-];
+const Home = () => {
+    const [filter, setFilter] = useState('All');
+    const [firstVideo, ...videos] = useMemo(() => {
+        if (filter === 'All') return videosData;
 
-const Home = ({ route }) => {
+        if (filter === 'New to you') return [...videosData].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        return videosData.filter((video) => video.type === filter.toLowerCase());
+    }, [videosData, filter]);
+
     return (
-        <DefaultLayout>
-            {/* Filter */}
-            <View style={styles.filterContainer}>
-                <Filter data={filters} />
-            </View>
-
-            {/* Video */}
-            <Video video={videos[0]} />
-
-            {/* Shorts */}
-            {route.params.filter === 'All' && (
-                <View style={styles.shortsContainer}>
-                    <View style={styles.shortsHeader}>
-                        <ShortsRedIcon />
-                        <TextCustomize size='md' fontWeight='500'>
-                            Shorts
-                        </TextCustomize>
-                    </View>
-                    <ShortImage />
+        <FilterProvider value={{ filter, setFilter }}>
+            <DefaultLayout>
+                {/* Filter */}
+                <View style={styles.filterContainer}>
+                    <Filter data={filters} />
                 </View>
-            )}
 
-            {/* List Video */}
-            <View style={styles.listVideo}>
-                <Video video={videos[1]} />
-                <Video video={videos[0]} />
-                <Video video={videos[0]} />
-                <Video video={videos[0]} />
-            </View>
-        </DefaultLayout>
+                {/* Video */}
+                <Video video={firstVideo} />
+
+                {/* Shorts */}
+                {filter === 'All' && (
+                    <View style={styles.shortsContainer}>
+                        <View style={styles.shortsHeader}>
+                            <ShortsRedIcon />
+                            <TextCustomize size='md' fontWeight='500'>
+                                Shorts
+                            </TextCustomize>
+                        </View>
+                        <ShortImage />
+                    </View>
+                )}
+
+                {/* List Video */}
+                <View style={styles.listVideo}>
+                    {videos.map((video) => (
+                        <Video key={uuid.v4()} video={video} />
+                    ))}
+                </View>
+            </DefaultLayout>
+        </FilterProvider>
     );
 };
 

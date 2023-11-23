@@ -1,7 +1,7 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import { Pressable } from 'react-native';
+import useFilter from '../../context/filterContext';
 import TextCustomize from '../text';
 import styles from './styles';
 
@@ -12,10 +12,9 @@ const linearActiveColors = ['#D9FBF9', '#FFDFFA', '#FFE5E8'];
 
 // TODO Open drawer when click explore
 const FilterItem = ({ data, isFirst }) => {
-    const navigation = useNavigation();
-    const route = useRoute();
+    const { filter, setFilter } = useFilter();
 
-    const isActive = route.params?.filter === data.title;
+    const isActive = filter === data.title;
 
     const Icon = data.icon;
     const paddingStyle = Icon
@@ -33,7 +32,7 @@ const FilterItem = ({ data, isFirst }) => {
             return;
         }
 
-        navigation.navigate(route.name, { filter: data.title });
+        setFilter(data.title);
     };
 
     return (
@@ -41,7 +40,7 @@ const FilterItem = ({ data, isFirst }) => {
             <LinearGradient
                 start={[0, 0]}
                 end={[1, 1]}
-                colors={data.special ? linearColors : normalColors}
+                colors={data.special ? linearColors : isActive ? activeColors : normalColors}
                 style={[
                     styles.filterItem,
                     isFirst && {

@@ -12,6 +12,9 @@ const styles = StyleSheet.create({
         height: 24,
         borderRadius: 12,
     },
+    text: {
+        flex: 1,
+    },
 });
 
 export default styles;

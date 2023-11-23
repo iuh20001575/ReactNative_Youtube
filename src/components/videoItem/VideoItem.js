@@ -1,46 +1,42 @@
-import React, { useState } from 'react';
-import { Image, Platform, Pressable, View } from 'react-native';
+import React, { memo } from 'react';
+import { Image, Pressable, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 import TextCustomize from '~/components/text';
-import VideoCustomize from '~/components/video';
 import { formatRelativeTime, formatTimeVideo, formatView } from '~/utils';
+import { addVideo } from '../../features/playingVideoSlice';
 import { MoreIcon } from '../icons';
 import styles from './styles';
 
 const VideoItem = ({ video }) => {
-    const [duration, setDuration] = useState(0);
+    const dispatch = useDispatch();
+
+    const handleClick = () => {
+        dispatch(addVideo(video));
+    };
 
     return (
-        <Pressable>
+        <Pressable onPress={handleClick}>
             <View style={styles.videoWrapper}>
-                <VideoCustomize
-                    video={video}
-                    onLoad={(e) => {
-                        setDuration(Math.floor(Platform.OS === 'web' ? e.target.duration : e.durationMillis / 1000));
-                    }}
-                />
-                <TextCustomize size='xs' style={styles.duration}>
-                    {formatTimeVideo(duration)}
-                </TextCustomize>
+                <Image resizeMode='cover' style={styles.posterImage} source={video.posterUrl} />
+                <View style={styles.durationView}>
+                    <TextCustomize size='xs' style={styles.duration}>
+                        {formatTimeVideo(video.duration)}
+                    </TextCustomize>
+                </View>
             </View>
             <View style={styles.body}>
                 <Pressable style={styles.avatarBtn}>
-                    <Image
-                        resizeMode='cover'
-                        style={styles.avatarImage}
-                        source={{
-                            uri: video.avatar,
-                        }}
-                    />
+                    <Image resizeMode='cover' style={styles.avatarImage} source={video.avatar} />
                 </Pressable>
                 <View style={styles.info}>
                     <TextCustomize size='md' style={styles.title}>
                         {video.title}
                     </TextCustomize>
-                    <TextCustomize size='xs' style={styles.desc}>
+                    <TextCustomize numberOfLines={2} size='xs' style={styles.desc}>
                         {video.channelName} · {formatView(video.views)} · {formatRelativeTime(new Date(video.date))}{' '}
                     </TextCustomize>
                 </View>
-                <Pressable onPress={() => console.log('More')} style={styles.moreBtn}>
+                <Pressable onPress={() => console.log('More')}>
                     <MoreIcon />
                 </Pressable>
             </View>
@@ -48,4 +44,4 @@ const VideoItem = ({ video }) => {
     );
 };
 
-export default VideoItem;
+export default memo(VideoItem);

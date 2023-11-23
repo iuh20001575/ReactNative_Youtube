@@ -2,15 +2,15 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     videoWrapper: {
-        aspectRatio: 1.7,
+        aspectRatio: 375 / 210,
         position: 'relative',
     },
-    poster: {
+    posterImage: {
         width: '100%',
-        height: '100%',
-        objectFit: 'cover',
+        aspectRatio: 375 / 210,
+        flex: 1,
     },
-    duration: {
+    durationView: {
         position: 'absolute',
         right: 8,
         bottom: 8,
@@ -18,6 +18,8 @@ const styles = StyleSheet.create({
         paddingVertical: 3,
         borderRadius: 4,
         backgroundColor: 'rgba(0, 0, 0, 0.55)',
+    },
+    duration: {
         color: '#fff',
     },
     body: {
@@ -48,7 +50,6 @@ const styles = StyleSheet.create({
     desc: {
         color: '#666666',
     },
-    moreBtn: {},
 });
 
 export default styles;
