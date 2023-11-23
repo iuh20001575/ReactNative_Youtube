@@ -18,11 +18,12 @@ import {
 } from '../icons';
 import VideoCustomize from '../video/VideoCustomize';
 import styles from './styles';
+import Animated, { interpolate, useAnimatedStyle } from 'react-native-reanimated';
 
 let idDuration;
 let idShowAction;
 
-const PlayingVideo = ({ video, nextVideo, translateY, handleClickSide }) => {
+const PlayingVideo = ({ video, nextVideo, translateY, bottomTranslateY, handleClickSide }) => {
     const [currentDuration, setCurrentDuration] = useState(0);
     const [showActions, setShowActions] = useState(true);
     const [count, setCount] = useState(0);
@@ -40,20 +41,29 @@ const PlayingVideo = ({ video, nextVideo, translateY, handleClickSide }) => {
     };
 
     const handleClickActions = () => {
-        setCount(count + 1);
-        setShowActions(false);
+        if (translateY?.value && translateY?.value > 0) handleClickSide();
+        else {
+            setCount(count + 1);
+            setShowActions(false);
+        }
     };
-
-    const handleControl = () => dispatch(togglePlaying());
 
     const handleReadyForDisplay = () => {
         setLoaded(true);
         console.log('handleReadyForDisplay');
     };
 
+    const handleControl = () => dispatch(togglePlaying());
     const handleNextVideo = () => dispatch(addVideo(nextVideo));
-
     const handlePrevVideo = () => dispatch(prevVideo());
+
+    const handleDown = () => (translateY.value = bottomTranslateY);
+
+    const opacityStyle = useAnimatedStyle(() => {
+        return {
+            opacity: interpolate(translateY.value, [0, 1], [1, 0]),
+        };
+    });
 
     useEffect(() => {
         setCurrentDuration(0);
@@ -97,60 +107,62 @@ const PlayingVideo = ({ video, nextVideo, translateY, handleClickSide }) => {
 
             {/* Actions */}
             {showActions && (
-                <Pressable onPress={handleClickActions} style={styles.actions}>
-                    {/* Header */}
-                    <View style={styles.header}>
-                        <Pressable style={styles.downBtn}>
-                            <DownArrowIcon width={16} height={16} fill='white' />
-                        </Pressable>
-                        <View style={styles.headerRight}>
-                            <Pressable style={styles.downBtn}>
-                                <AutoPlayIcon />
+                <Animated.View style={[opacityStyle, styles.container]}>
+                    <Pressable onPress={handleClickActions} style={styles.actions}>
+                        {/* Header */}
+                        <View style={styles.header}>
+                            <Pressable onPress={handleDown} style={styles.downBtn}>
+                                <DownArrowIcon width={16} height={16} fill='white' />
                             </Pressable>
-                            <Pressable style={styles.downBtn}>
-                                <CastIcon fill='#fff' />
+                            <View style={styles.headerRight}>
+                                <Pressable style={styles.downBtn}>
+                                    <AutoPlayIcon />
+                                </Pressable>
+                                <Pressable style={styles.downBtn}>
+                                    <CastIcon fill='#fff' />
+                                </Pressable>
+                                <Pressable style={styles.downBtn}>
+                                    <SubtitleIcon />
+                                </Pressable>
+                                <Pressable style={styles.downBtn}>
+                                    <SettingIcon />
+                                </Pressable>
+                            </View>
+                        </View>
+
+                        {/* Body */}
+                        <View style={styles.body}>
+                            <Pressable
+                                disabled={index < 1}
+                                onPress={handlePrevVideo}
+                                style={[styles.bodyBtn, styles.prevNextBtn]}
+                            >
+                                <PreviousIcon fill={index > 0 ? '#fff' : 'rgba(255, 255, 255, 0.5)'} />
                             </Pressable>
-                            <Pressable style={styles.downBtn}>
-                                <SubtitleIcon />
+                            <Pressable onPress={handleControl} style={[styles.bodyBtn, styles.controlBtn]}>
+                                {(isPlaying && <ControlIcon />) || <PlayIcon />}
                             </Pressable>
-                            <Pressable style={styles.downBtn}>
-                                <SettingIcon />
+                            <Pressable onPress={handleNextVideo} style={[styles.bodyBtn, styles.prevNextBtn]}>
+                                <NextIcon />
                             </Pressable>
                         </View>
-                    </View>
 
-                    {/* Body */}
-                    <View style={styles.body}>
-                        <Pressable
-                            disabled={index < 1}
-                            onPress={handlePrevVideo}
-                            style={[styles.bodyBtn, styles.prevNextBtn]}
-                        >
-                            <PreviousIcon fill={index > 0 ? '#fff' : 'rgba(255, 255, 255, 0.5)'} />
-                        </Pressable>
-                        <Pressable onPress={handleControl} style={[styles.bodyBtn, styles.controlBtn]}>
-                            {(isPlaying && <ControlIcon />) || <PlayIcon />}
-                        </Pressable>
-                        <Pressable onPress={handleNextVideo} style={[styles.bodyBtn, styles.prevNextBtn]}>
-                            <NextIcon />
-                        </Pressable>
-                    </View>
-
-                    {/* Footer */}
-                    <View style={styles.footer}>
-                        <View style={styles.durationWrapper}>
-                            <TextCustomize size='sm' fontWeight={500} style={styles.currentDuration}>
-                                {formatTimeVideo(currentDuration)}
-                            </TextCustomize>
-                            <TextCustomize size='sm' fontWeight={500} style={styles.duration}>
-                                &nbsp;/ {formatTimeVideo(video.duration)}
-                            </TextCustomize>
+                        {/* Footer */}
+                        <View style={styles.footer}>
+                            <View style={styles.durationWrapper}>
+                                <TextCustomize size='sm' fontWeight={500} style={styles.currentDuration}>
+                                    {formatTimeVideo(currentDuration)}
+                                </TextCustomize>
+                                <TextCustomize size='sm' fontWeight={500} style={styles.duration}>
+                                    &nbsp;/ {formatTimeVideo(video.duration)}
+                                </TextCustomize>
+                            </View>
+                            <Pressable style={styles.fullScreenBtn}>
+                                <FullScreenIcon />
+                            </Pressable>
                         </View>
-                        <Pressable style={styles.fullScreenBtn}>
-                            <FullScreenIcon />
-                        </Pressable>
-                    </View>
-                </Pressable>
+                    </Pressable>
+                </Animated.View>
             )}
         </View>
     );

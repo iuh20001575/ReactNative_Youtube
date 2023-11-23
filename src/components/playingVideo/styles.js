@@ -44,14 +44,18 @@ const styles = StyleSheet.create({
     },
 
     // Actions
-    actions: {
+    container: {
         position: 'absolute',
         top: 0,
         left: 0,
         right: 0,
         bottom: 0,
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    actions: {
         justifyContent: 'space-between',
+        width: '100%',
+        flex: 1,
     },
     header: {
         height: 48,

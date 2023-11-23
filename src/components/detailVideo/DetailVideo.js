@@ -182,6 +182,7 @@ const DetailVideo = ({ selectedVideo }) => {
                                     video={selectedVideo}
                                     nextVideo={videos[0]}
                                     translateY={translateY}
+                                    bottomTranslateY={bottomTranslateY}
                                     handleClickSide={handleClickSide}
                                 />
                             </Animated.View>
