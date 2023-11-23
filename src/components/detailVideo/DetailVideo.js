@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Dimensions, Image, Platform, Pressable, ScrollView, View, useWindowDimensions } from 'react-native';
+import { Dimensions, Platform, Pressable, ScrollView, View, useWindowDimensions } from 'react-native';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated, {
     Extrapolate,
@@ -15,31 +15,26 @@ import Category from '~/components/category';
 import { comments, videos as videosData } from '../../data';
 import { formatView } from '../../utils';
 import Comment from '../comment/Comment';
-import {
-    CloseIcon,
-    ControlIcon,
-    CutIcon,
-    DislikeIcon,
-    DownArrowIcon,
-    DownloadIcon,
-    LikeIcon,
-    NotificationIcon,
-    SaveIcon,
-    ShareIcon,
-} from '../icons';
+import { CutIcon, DislikeIcon, DownloadIcon, LikeIcon, SaveIcon, ShareIcon } from '../icons';
 import InfoVideo from '../infoVideo/InfoVideo';
 import PlayingVideo from '../playingVideo/PlayingVideo';
 import TextCustomize from '../text/TextCustomize';
 import VideoItem from '../videoItem/VideoItem';
+import ActionsSide from './ActionsSide';
+import Channel from './Channel';
+import InfoSide from './InfoSide';
 import styles from './styles';
 
 const SIZES = Dimensions.get('window');
 
 const IMAGE_TOP_DISTANCE = 100;
-const IMAGE_BOTTOM_DISTANCE = SIZES.width / 1.2;
+const IMAGE_BOTTOM_DISTANCE = (SIZES.height * 80) / 100;
 const BIG_IMAGE_SIZE = (SIZES.width * 210) / 375;
 
 const IMAGE_WIDTH_COL = 129;
+
+const SIDE_HEIGHT = 54;
+const NAVIGATION_HEIGHT = 49;
 
 const categories = [
     {
@@ -70,16 +65,14 @@ const DetailVideo = ({ onClose, selectedVideo }) => {
     const [videos, setVideos] = useState([]);
     const ref = useRef(null);
     const [isShowComment, setShowComment] = useState(false);
-    const bottomTranslateY = useMemo(() => height - 54 - top - bottom - 49, [bottom, top]);
+    const bottomTranslateY = useMemo(() => height - SIDE_HEIGHT - top - bottom - NAVIGATION_HEIGHT, [bottom, top]);
 
     useEffect(() => {
-        translateY.value = withTiming(0, { duration: 300 });
+        translateY.value = 0;
     }, []);
 
     useEffect(() => {
-        if (selectedVideo) {
-            translateY.value = withTiming(0, { duration: 300 });
-        }
+        if (selectedVideo) translateY.value = 0;
     }, [selectedVideo]);
 
     useEffect(() => {
@@ -127,8 +120,8 @@ const DetailVideo = ({ onClose, selectedVideo }) => {
             transform: [{ translateY: translateY.value }],
             height: interpolate(
                 translateY.value,
-                [IMAGE_TOP_DISTANCE, SIZES.height - top - bottom - 54 - 49],
-                [SIZES.height - top - bottom, 54],
+                [IMAGE_TOP_DISTANCE, bottomTranslateY],
+                [SIZES.height - top - bottom, SIDE_HEIGHT],
                 {
                     extrapolateRight: Extrapolate.CLAMP,
                     extrapolateLeft: Extrapolate.CLAMP,
@@ -141,27 +134,28 @@ const DetailVideo = ({ onClose, selectedVideo }) => {
         return {
             width: interpolate(
                 translateY.value,
-                [IMAGE_TOP_DISTANCE, IMAGE_BOTTOM_DISTANCE],
+                [(SIZES.height * 70) / 100, IMAGE_BOTTOM_DISTANCE],
                 [SIZES.width, IMAGE_WIDTH_COL],
                 {
                     extrapolateRight: Extrapolate.CLAMP,
                     extrapolateLeft: Extrapolate.CLAMP,
                 },
             ),
-            height: interpolate(translateY.value, [IMAGE_TOP_DISTANCE, IMAGE_BOTTOM_DISTANCE], [BIG_IMAGE_SIZE, 54], {
-                extrapolateRight: Extrapolate.CLAMP,
-                extrapolateLeft: Extrapolate.CLAMP,
-            }),
-            padding: interpolate(translateY.value, [IMAGE_TOP_DISTANCE, (SIZES.height * 70) / 100], [0, 0], {
-                extrapolateRight: 0,
-                extrapolateLeft: 0,
-            }),
+            height: interpolate(
+                translateY.value,
+                [IMAGE_TOP_DISTANCE, IMAGE_BOTTOM_DISTANCE],
+                [BIG_IMAGE_SIZE, SIDE_HEIGHT],
+                {
+                    extrapolateRight: Extrapolate.CLAMP,
+                    extrapolateLeft: Extrapolate.CLAMP,
+                },
+            ),
         };
     });
 
     const detailsStyle = useAnimatedStyle(() => {
         return {
-            opacity: interpolate(translateY.value, [IMAGE_TOP_DISTANCE, (SIZES.height * 70) / 100], [1, 0], {
+            opacity: interpolate(translateY.value, [IMAGE_TOP_DISTANCE, (SIZES.height * 60) / 100], [1, 0], {
                 extrapolateRight: Extrapolate.CLAMP,
                 extrapolateLeft: Extrapolate.CLAMP,
             }),
@@ -170,8 +164,6 @@ const DetailVideo = ({ onClose, selectedVideo }) => {
 
     const expandPlayer = () => {
         if (translateY.value > 100) translateY.value = withTiming(0, { duration: 300 });
-
-        console.log('expandPlayer');
     };
 
     const handleOpenComment = () => Platform.OS !== 'web' && setShowComment(true);
@@ -187,56 +179,21 @@ const DetailVideo = ({ onClose, selectedVideo }) => {
                                 <PlayingVideo video={selectedVideo} nextVideo={videos[0]} />
                             </Animated.View>
 
-                            <View style={[styles.side, { width: SIZES.width - 235 }]}>
-                                <TextCustomize size='xs' numberOfLines={1} style={[styles.sideText]}>
-                                    {selectedVideo?.title}
-                                </TextCustomize>
-
-                                <TextCustomize
-                                    numberOfLines={1}
-                                    size='xs'
-                                    style={[styles.sideText, styles.sideChannelName]}
-                                >
-                                    {selectedVideo?.channelName}
-                                </TextCustomize>
-                            </View>
+                            <InfoSide selectedVideo={selectedVideo} />
                         </Pressable>
                     </Animated.View>
                 </PanGestureHandler>
 
                 {/* Side actions */}
-                <View style={[styles.iconsContainer]}>
-                    <Pressable style={styles.sideBtn}>
-                        <ControlIcon width={18} height={18} fill='#000' />
-                    </Pressable>
-                    <Pressable style={styles.sideBtn}>
-                        <CloseIcon width={24} height={24} />
-                    </Pressable>
-                </View>
+                <ActionsSide />
             </View>
 
-            <Animated.ScrollView style={[detailsStyle, styles.container]} ref={ref}>
+            <Animated.ScrollView style={[detailsStyle]} ref={ref}>
                 {/* Info video */}
                 <InfoVideo video={selectedVideo} />
 
                 {/* Channel */}
-                <View style={styles.channelWrapper}>
-                    <View style={styles.channel}>
-                        <Image source={selectedVideo.avatar} style={styles.avatar} />
-                        <View style={styles.channelInfo}>
-                            <TextCustomize fontWeight={500} size='sm'>
-                                {selectedVideo.channelName}
-                            </TextCustomize>
-                            <TextCustomize size='xs' style={styles.textSecondary}>
-                                {formatView(Math.random() * 10000000, false)}
-                            </TextCustomize>
-                        </View>
-                    </View>
-                    <Pressable style={styles.subscriptionBtn}>
-                        <NotificationIcon />
-                        <DownArrowIcon />
-                    </Pressable>
-                </View>
+                <Channel selectedVideo={selectedVideo} />
 
                 {/* Categories */}
                 <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={styles.categories}>
