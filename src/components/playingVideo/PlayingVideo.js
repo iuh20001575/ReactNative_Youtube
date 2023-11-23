@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Image, Pressable, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import TextCustomize from '../../components/text';
-import { addVideo, prevVideo } from '../../features/playingVideoSlice';
+import { addVideo, prevVideo, setPlaying, togglePlaying } from '../../features/playingVideoSlice';
 import { formatTimeVideo } from '../../utils';
 import {
     AutoPlayIcon,
@@ -24,12 +24,11 @@ let idShowAction;
 
 const PlayingVideo = ({ video, nextVideo }) => {
     const [currentDuration, setCurrentDuration] = useState(0);
-    const [isPlaying, setPlaying] = useState(true);
     const [showActions, setShowActions] = useState(true);
     const [count, setCount] = useState(0);
     const [loaded, setLoaded] = useState(false);
     const videoRef = useRef();
-    const { index, videos } = useSelector((state) => state.playingVideo);
+    const { index, isPlaying } = useSelector((state) => state.playingVideo);
     const dispatch = useDispatch();
 
     const handleClickVideo = (e) => {
@@ -42,26 +41,20 @@ const PlayingVideo = ({ video, nextVideo }) => {
         setShowActions(false);
     };
 
-    const handleControl = () => {
-        setPlaying((isPlaying) => !isPlaying);
-    };
+    const handleControl = () => dispatch(togglePlaying());
 
     const handleReadyForDisplay = () => {
         setLoaded(true);
         console.log('handleReadyForDisplay');
     };
 
-    const handleNextVideo = () => {
-        dispatch(addVideo(nextVideo));
-    };
+    const handleNextVideo = () => dispatch(addVideo(nextVideo));
 
-    const handlePrevVideo = () => {
-        dispatch(prevVideo());
-    };
+    const handlePrevVideo = () => dispatch(prevVideo());
 
     useEffect(() => {
         setCurrentDuration(0);
-        setPlaying(true);
+        dispatch(setPlaying(true));
         setCount(0);
         setLoaded(false);
         setShowActions(false);

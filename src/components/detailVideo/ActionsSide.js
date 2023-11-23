@@ -1,19 +1,24 @@
 import React from 'react';
 import { Pressable, View } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { reset } from '../../features/playingVideoSlice';
-import { CloseIcon, ControlIcon } from '../icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { reset, togglePlaying } from '../../features/playingVideoSlice';
+import { CloseIcon, ControlIcon, PlayIcon } from '../icons';
 import styles from './styles';
 
 export default function ActionsSide() {
+    const isPlaying = useSelector((state) => state.playingVideo.isPlaying);
     const dispatch = useDispatch();
+
+    const Icon = (isPlaying && ControlIcon) || PlayIcon;
 
     const handleCloseSide = () => dispatch(reset());
 
+    const handleControl = () => dispatch(togglePlaying());
+
     return (
         <View style={[styles.iconsContainer]}>
-            <Pressable style={styles.sideBtn}>
-                <ControlIcon width={18} height={18} fill='#000' />
+            <Pressable onPress={handleControl} style={styles.sideBtn}>
+                <Icon width={18} height={18} fill='#000' />
             </Pressable>
             <Pressable onPress={handleCloseSide} style={styles.sideBtn}>
                 <CloseIcon width={24} height={24} />

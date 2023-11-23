@@ -62,9 +62,11 @@ const DetailVideo = ({ selectedVideo }) => {
     const translateY = useSharedValue(300);
     const { top, bottom } = useSafeAreaInsets();
     const { height } = useWindowDimensions();
+
     const [videos, setVideos] = useState([]);
-    const ref = useRef(null);
     const [isShowComment, setShowComment] = useState(false);
+
+    const ref = useRef(null);
     const bottomTranslateY = useMemo(() => height - SIDE_HEIGHT - top - bottom - NAVIGATION_HEIGHT, [bottom, top]);
 
     useEffect(() => {

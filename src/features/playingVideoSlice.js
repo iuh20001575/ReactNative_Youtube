@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
     videos: [],
     index: -1,
+    isPlaying: true,
 };
 
 export const playingVideoSlice = createSlice({
@@ -21,9 +22,15 @@ export const playingVideoSlice = createSlice({
             state.videos = [];
             state.index = -1;
         },
+        setPlaying: (state, { payload }) => {
+            state.isPlaying = payload;
+        },
+        togglePlaying: (state) => {
+            state.isPlaying = !state.isPlaying;
+        },
     },
 });
 
-export const { addVideo, prevVideo, reset } = playingVideoSlice.actions;
+export const { addVideo, prevVideo, reset, setPlaying, togglePlaying } = playingVideoSlice.actions;
 
 export default playingVideoSlice.reducer;
