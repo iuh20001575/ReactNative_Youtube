@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FlatList, Image, Pressable, ScrollView, View } from 'react-native';
 import uuid from 'react-native-uuid';
 import Category from '~/components/category';
@@ -19,6 +19,8 @@ import VideoCustomize from '../../components/video/VideoCustomize';
 import VideoItem from '../../components/videoItem/VideoItem';
 import { comments, videos } from '../../data';
 import styles from './styles';
+import { useRoute } from '@react-navigation/native';
+import PlayingVideo from '../../components/playingVideo/PlayingVideo';
 
 const categories = [
     {
@@ -39,23 +41,17 @@ const categories = [
     },
 ];
 
-const video = videos[0];
 const comment = comments[0];
 
 const DetailVideo = () => {
+    const route = useRoute();
+    const video = route.params.video;
+
     return (
         <Wrapper style={styles.container}>
             <ScrollView>
                 {/* Video */}
-                <View style={styles.videoWrapper}>
-                    <VideoCustomize video={video} />
-                    <View style={styles.progressBar}>
-                        <View style={styles.loaded} />
-                        <View style={styles.viewed}>
-                            <View style={styles.point} />
-                        </View>
-                    </View>
-                </View>
+                <PlayingVideo video={video} />
 
                 {/* Info video */}
                 <View style={styles.info}>
@@ -131,7 +127,7 @@ const DetailVideo = () => {
                     data={videos}
                     renderItem={({ item }) => <VideoItem video={item} />}
                     style={styles.videos}
-                ></FlatList>
+                />
             </ScrollView>
         </Wrapper>
     );
