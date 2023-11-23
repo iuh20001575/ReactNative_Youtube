@@ -1,5 +1,130 @@
-const { StyleSheet } = require('react-native');
+import { StyleSheet } from 'react-native';
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    headerLayout: {
+        width: '100%',
+        height: 51,
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+    },
+    headerIcon: {
+        width: 24,
+        height: 25,
+        marginRight: 12,
+    },
+    bodyLayout: {
+        width: '100%',
+        position: 'relative',
+        marginTop: 0,
+    },
+    actionLayout: {
+        // width: 36,
+        height: 336,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        gap: 24,
+        position: 'absolute',
+        bottom: 75,
+        right: 14,
+    },
+    actionItem: {
+        // width: 36,
+        height: 48,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    textAction: {
+        color: '#FFFFFF',
+        fontSize: 12,
+        marginTop: 4,
+    },
+    textRemix: {
+        color: '#FFFFFF',
+        opacity: 0.5,
+    },
+    imageMusicLayout: {
+        width: 40,
+        height: 40,
+        position: 'absolute',
+        bottom: 14,
+        right: 10,
+    },
+    imageMusic: {
+        width: 40,
+        height: 40,
+        borderRadius: 5,
+    },
+    infoLayout: {
+        width: 288,
+        height: 68,
+        position: 'absolute',
+        left: 16,
+        bottom: 13,
+    },
+    chanelLayout: {
+        height: 32,
+        marginBottom: 0,
+        marginLeft: 0,
+        alignItems: 'center',
+        flexDirection: 'row',
+        gap: 10,
+        paddingLeft: 0,
+    },
+    subButtonLayout: {
+        width: 78,
+        height: 26,
+        borderRadius: 4,
+    },
+    channelItem: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        flexDirection: 'row',
+        height: 32,
+        marginLeft: 0,
+        marginBottom: 0,
+        gap: 8,
+    },
+    imageChannelLayout: {
+        width: 32,
+        height: 32,
+    },
+    imageChannel: {
+        width: 32,
+        height: 32,
+        borderRadius: 50,
+    },
+    progressBar: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        height: 2,
+    },
+    loaded: {
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    },
+    viewed: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        height: '100%',
+        backgroundColor: 'rgba(226, 51, 37, 1)',
+        zIndex: 2,
+    },
+    point: {
+        position: 'absolute',
+        right: 0,
+        top: -1,
+        width: 4,
+        height: 4,
+        backgroundColor: 'rgba(226, 51, 37, 1)',
+        borderRadius: 2,
+    },
+});
 
 export default styles;
