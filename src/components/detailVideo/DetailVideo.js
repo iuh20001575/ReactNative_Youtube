@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Dimensions, Image, Platform, Pressable, ScrollView, StatusBar, View } from 'react-native';
-import { PanGestureHandler, TouchableWithoutFeedback } from 'react-native-gesture-handler';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Dimensions, Image, Platform, Pressable, ScrollView, View, useWindowDimensions } from 'react-native';
+import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated, {
     Extrapolate,
     interpolate,
@@ -11,10 +11,8 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import uuid from 'react-native-uuid';
-import { useDispatch } from 'react-redux';
 import Category from '~/components/category';
 import { comments, videos as videosData } from '../../data';
-import { addVideo } from '../../features/playingVideoSlice';
 import { formatView } from '../../utils';
 import Comment from '../comment/Comment';
 import {
@@ -43,9 +41,6 @@ const BIG_IMAGE_SIZE = (SIZES.width * 210) / 375;
 
 const IMAGE_WIDTH_COL = 129;
 
-const screenHeight = Dimensions.get('screen').height;
-let bottomTranslateY = screenHeight - 54 - 49 * 2 - StatusBar.currentHeight;
-
 const categories = [
     {
         icon: ShareIcon,
@@ -71,10 +66,11 @@ const DetailVideo = ({ onClose, selectedVideo }) => {
     const translateX = useSharedValue(0);
     const translateY = useSharedValue(300);
     const { top, bottom } = useSafeAreaInsets();
+    const { height } = useWindowDimensions();
     const [videos, setVideos] = useState([]);
     const ref = useRef(null);
-    const dispatch = useDispatch();
     const [isShowComment, setShowComment] = useState(false);
+    const bottomTranslateY = useMemo(() => height - 54 - top - bottom - 49, [bottom, top]);
 
     useEffect(() => {
         translateY.value = withTiming(0, { duration: 300 });
@@ -96,7 +92,6 @@ const DetailVideo = ({ onClose, selectedVideo }) => {
             .filter((videoData) => videoData.id !== selectedVideo.id)
             .sort(() => Math.random() - Math.random());
         setVideos(data);
-        dispatch(addVideo(selectedVideo));
     }, [selectedVideo]);
 
     const gestureHandler = useAnimatedGestureHandler({
@@ -175,6 +170,8 @@ const DetailVideo = ({ onClose, selectedVideo }) => {
 
     const expandPlayer = () => {
         if (translateY.value > 100) translateY.value = withTiming(0, { duration: 300 });
+
+        console.log('expandPlayer');
     };
 
     const handleOpenComment = () => Platform.OS !== 'web' && setShowComment(true);
@@ -184,7 +181,7 @@ const DetailVideo = ({ onClose, selectedVideo }) => {
             <View style={styles.playerContainer}>
                 <PanGestureHandler onGestureEvent={gestureHandler}>
                     <Animated.View>
-                        <TouchableWithoutFeedback onPress={expandPlayer} style={styles.playerContainer}>
+                        <Pressable onPress={expandPlayer} style={styles.playerContainer}>
                             <Animated.View style={[imageStyle]}>
                                 {/* Video */}
                                 <PlayingVideo video={selectedVideo} nextVideo={videos[0]} />
@@ -203,7 +200,7 @@ const DetailVideo = ({ onClose, selectedVideo }) => {
                                     {selectedVideo?.channelName}
                                 </TextCustomize>
                             </View>
-                        </TouchableWithoutFeedback>
+                        </Pressable>
                     </Animated.View>
                 </PanGestureHandler>
 

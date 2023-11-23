@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
 import { Image, Pressable, View } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,10 +23,9 @@ let idDuration;
 let idShowAction;
 
 const PlayingVideo = ({ video, nextVideo }) => {
-    const navigation = useNavigation();
     const [currentDuration, setCurrentDuration] = useState(0);
     const [isPlaying, setPlaying] = useState(true);
-    const [showActions, setShowActions] = useState(false);
+    const [showActions, setShowActions] = useState(true);
     const [count, setCount] = useState(0);
     const [loaded, setLoaded] = useState(false);
     const videoRef = useRef();
@@ -128,11 +126,11 @@ const PlayingVideo = ({ video, nextVideo }) => {
                     {/* Body */}
                     <View style={styles.body}>
                         <Pressable
-                            disabled={!index}
+                            disabled={index < 1}
                             onPress={handlePrevVideo}
                             style={[styles.bodyBtn, styles.prevNextBtn]}
                         >
-                            <PreviousIcon fill={index ? '#fff' : 'rgba(255, 255, 255, 0.5)'} />
+                            <PreviousIcon fill={index > 0 ? '#fff' : 'rgba(255, 255, 255, 0.5)'} />
                         </Pressable>
                         <Pressable onPress={handleControl} style={[styles.bodyBtn, styles.controlBtn]}>
                             {(isPlaying && <ControlIcon />) || <PlayIcon />}

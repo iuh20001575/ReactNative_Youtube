@@ -14,8 +14,7 @@ export const playingVideoSlice = createSlice({
             state.index += 1;
         },
         prevVideo: (state) => {
-            state.index -= 2;
-            state.videos.pop();
+            state.index -= 1;
             state.videos.pop();
         },
     },
