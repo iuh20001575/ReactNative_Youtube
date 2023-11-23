@@ -4,17 +4,20 @@ import { View } from 'react-native';
 import { ScrollView } from 'react-native-virtualized-view';
 import { useDispatch, useSelector } from 'react-redux';
 import Wrapper from '~/components/wrapper';
+import DetailVideo from '../../components/detailVideo/DetailVideo';
 import { setTheme } from '../../features/themeSlice';
 import Header from '../components/header';
 import Navigation from '../components/navigation';
 import styles from './styles';
-import DetailVideo from '../../components/detailVideo/DetailVideo';
 
 const DefaultLayout = ({ children }) => {
-    const { dark } = useSelector((state) => state.theme);
     const route = useRoute();
+
     const [selectedVideo, setSelectedVideo] = useState(null);
+
     const videos = useSelector((state) => state.playingVideo.videos);
+    const { dark } = useSelector((state) => state.theme);
+
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -22,7 +25,7 @@ const DefaultLayout = ({ children }) => {
     }, [route]);
 
     useEffect(() => {
-        videos.length > 0 && setSelectedVideo(videos.at(-1));
+        setSelectedVideo(videos?.length ? videos.at(-1) : null);
     }, [videos]);
 
     return (
@@ -32,7 +35,7 @@ const DefaultLayout = ({ children }) => {
                     <Header />
                     <View style={[styles.body, styles.scroll]}>{children}</View>
                 </ScrollView>
-                {selectedVideo && <DetailVideo selectedVideo={selectedVideo} onClose={() => setSelectedVideo(null)} />}
+                {selectedVideo && <DetailVideo selectedVideo={selectedVideo} />}
                 <Navigation />
             </View>
         </Wrapper>

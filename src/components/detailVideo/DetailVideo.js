@@ -57,7 +57,7 @@ const categories = [
 
 const comment = comments[0];
 
-const DetailVideo = ({ onClose, selectedVideo }) => {
+const DetailVideo = ({ selectedVideo }) => {
     const translateX = useSharedValue(0);
     const translateY = useSharedValue(300);
     const { top, bottom } = useSafeAreaInsets();
@@ -162,7 +162,7 @@ const DetailVideo = ({ onClose, selectedVideo }) => {
         };
     });
 
-    const expandPlayer = () => {
+    const handleClickSide = () => {
         if (translateY.value > 100) translateY.value = withTiming(0, { duration: 300 });
     };
 
@@ -173,7 +173,7 @@ const DetailVideo = ({ onClose, selectedVideo }) => {
             <View style={styles.playerContainer}>
                 <PanGestureHandler onGestureEvent={gestureHandler}>
                     <Animated.View>
-                        <Pressable onPress={expandPlayer} style={styles.playerContainer}>
+                        <Pressable onPress={handleClickSide} style={styles.playerContainer}>
                             <Animated.View style={[imageStyle]}>
                                 {/* Video */}
                                 <PlayingVideo video={selectedVideo} nextVideo={videos[0]} />

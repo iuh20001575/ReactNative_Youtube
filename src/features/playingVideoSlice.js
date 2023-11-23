@@ -17,9 +17,13 @@ export const playingVideoSlice = createSlice({
             state.index -= 1;
             state.videos.pop();
         },
+        reset: (state) => {
+            state.videos = [];
+            state.index = -1;
+        },
     },
 });
 
-export const { addVideo, prevVideo } = playingVideoSlice.actions;
+export const { addVideo, prevVideo, reset } = playingVideoSlice.actions;
 
 export default playingVideoSlice.reducer;
