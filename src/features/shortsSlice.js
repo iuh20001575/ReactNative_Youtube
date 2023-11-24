@@ -5,6 +5,7 @@ const initialState = {
     page: 0,
     shorts: [],
     loading: false,
+    isEnd: false,
 };
 
 const getShorts = createAsyncThunk('shorts/getShorts', async ({ page }) => {
@@ -16,7 +17,11 @@ const getShorts = createAsyncThunk('shorts/getShorts', async ({ page }) => {
 const shortsSlice = createSlice({
     name: 'shorts',
     initialState,
-    reducers: {},
+    reducers: {
+        sort: (state, { payload }) => {
+            state.shorts = [payload, ...state.shorts.filter((s) => s.id !== payload.id)];
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(getShorts.pending, (state) => {
@@ -27,10 +32,13 @@ const shortsSlice = createSlice({
             })
             .addCase(getShorts.fulfilled, (state, { payload }) => {
                 state.shorts.push(...payload);
+                state.page += 1;
+                state.loading = false;
+                state.isEnd = !payload?.length;
             });
     },
 });
 
 export default shortsSlice.reducer;
-export const {} = shortsSlice.actions;
+export const { sort } = shortsSlice.actions;
 export { getShorts };
