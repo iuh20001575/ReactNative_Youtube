@@ -9,6 +9,7 @@ import Search from '~/screens/search';
 import Short from '~/screens/shorts';
 import Subscriptions from '~/screens/subscriptions';
 import { ThemeProvider } from './src/context/themeContext';
+import Account from './src/screens/account/Account';
 
 const Stack = createNativeStackNavigator();
 
@@ -62,13 +63,20 @@ const screens = [
             title: 'Detail video',
         },
     },
+    {
+        name: 'account',
+        component: Account,
+        options: {
+            title: 'Account',
+        },
+    },
 ];
 
 export default function App() {
     return (
         <ThemeProvider>
             <NavigationContainer>
-                <Stack.Navigator initialRouteName='shorts'>
+                <Stack.Navigator initialRouteName='home'>
                     {screens.map((screen) => (
                         <Stack.Screen
                             initialParams={{ filter: 'All' }}
