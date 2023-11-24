@@ -7,6 +7,7 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
+        duration: 21,
         id: 1,
     },
     {
@@ -17,6 +18,7 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
+        duration: 13,
         id: 2,
     },
     {
@@ -27,6 +29,7 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
+        duration: 19,
         id: 3,
     },
     {
@@ -37,6 +40,7 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
+        duration: 17,
         id: 4,
     },
     {
@@ -47,6 +51,7 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
+        duration: 24,
         id: 5,
     },
     {
@@ -57,6 +62,7 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
+        duration: 14,
         id: 6,
     },
     {
@@ -67,6 +73,7 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
+        duration: 12,
         id: 7,
     },
     {
@@ -77,6 +84,7 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
+        duration: 15,
         id: 8,
     },
     {
@@ -87,6 +95,7 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
+        duration: 11,
         id: 10,
     },
     {
@@ -97,6 +106,7 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
+        duration: 13,
         id: 11,
     },
     {
@@ -107,6 +117,7 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
+        duration: 28,
         id: 12,
     },
 ];

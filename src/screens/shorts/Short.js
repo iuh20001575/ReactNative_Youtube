@@ -6,7 +6,6 @@ import TextCustomize from '~/components/text';
 import {
     CommentIconWhite,
     LikeIconWhite,
-    MusicIcon,
     RemixIconWhite,
     ShareIconWhite,
     ShortInfo,
@@ -19,10 +18,12 @@ import styles from './styles';
 
 function Short({ video, height, active }) {
     const [shouldPlay, setShouldPlay] = useState(false);
+    const [widthProgress, setWidthProgress] = useState(0);
     const { top } = useSafeAreaInsets();
     const ref = useRef();
 
     const handleControl = () => setShouldPlay((prev) => !prev);
+    const handlePlaybackStatusUpdate = (e) => setWidthProgress((e.positionMillis / e.durationMillis) * 100);
 
     useEffect(() => {
         setShouldPlay(active);
@@ -42,6 +43,7 @@ function Short({ video, height, active }) {
                         source={{ uri: video.videoUrl }}
                         isLooping
                         ref={ref}
+                        onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
                     />
                 </View>
 
@@ -71,6 +73,7 @@ function Short({ video, height, active }) {
 
                     {/* Info */}
                     <View style={styles.infoLayout}>
+                        <TextCustomize style={styles.textColor}>{video.title}</TextCustomize>
                         <View style={styles.chanelLayout}>
                             <View style={styles.channelItem}>
                                 <View style={styles.imageChannelLayout}>
@@ -80,19 +83,12 @@ function Short({ video, height, active }) {
                             </View>
                             <Subscribe style={styles.subButtonLayout} />
                         </View>
-                        <TextCustomize style={styles.textColor}>{video.title}</TextCustomize>
-                        <View style={styles.musicWrapper}>
-                            <MusicIcon />
-                            <TextCustomize numberOfLines={3} size='sm' style={styles.textColor}>
-                                Original Sound
-                            </TextCustomize>
-                        </View>
                     </View>
 
                     {/* Progress */}
                     <View style={styles.progressBar}>
                         <View style={styles.loaded} />
-                        <View style={[styles.viewed /*{ width: `${(currentDuration / duration) * 100}%` }*/]}>
+                        <View style={[styles.viewed, { width: `${widthProgress}%` }]}>
                             <View style={styles.point} />
                         </View>
                     </View>
