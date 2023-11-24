@@ -67,7 +67,7 @@ export default function App() {
             <BottomSheetModalProvider>
                 <Provider store={store}>
                     <NavigationContainer>
-                        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='shorts'>
+                        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='home'>
                             {screens.map((screen) => (
                                 <Stack.Screen key={uuid.v4()} {...screen} />
                             ))}
