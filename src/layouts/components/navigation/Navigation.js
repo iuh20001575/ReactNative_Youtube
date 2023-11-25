@@ -64,7 +64,9 @@ const Navigation = ({}) => {
             style={[styles.container, dark && { backgroundColor: black, borderTopColor: 'rgba(255, 255, 255, 0.1)' }]}
         >
             {navigationList.map((item) => {
-                const Icon = route.name === item.name ? item.activeIcon : item.icon;
+                let Icon = route.name === item.name ? item.activeIcon : item.icon;
+
+                if (route.name === 'searchResult' && item.name === 'home') Icon = HomeFocusIcon;
 
                 return (
                     <Pressable key={uuid.v4()} style={styles.style1} onPress={() => navigation.navigate(item.name)}>
