@@ -1,5 +1,7 @@
+import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
-import { Image, Pressable, View } from 'react-native';
+import { Pressable, View } from 'react-native';
+import Animated, { interpolate, useAnimatedStyle } from 'react-native-reanimated';
 import { useDispatch, useSelector } from 'react-redux';
 import TextCustomize from '../../components/text';
 import { addVideo, prevVideo, setPlaying, togglePlaying } from '../../features/playingVideoSlice';
@@ -18,7 +20,6 @@ import {
 } from '../icons';
 import VideoCustomize from '../video/VideoCustomize';
 import styles from './styles';
-import Animated, { interpolate, useAnimatedStyle } from 'react-native-reanimated';
 
 let idDuration;
 let idShowAction;
@@ -31,6 +32,7 @@ const PlayingVideo = ({ video, nextVideo, translateY, bottomTranslateY, handleCl
     const videoRef = useRef();
     const { index, isPlaying } = useSelector((state) => state.playingVideo);
     const dispatch = useDispatch();
+    const focus = useIsFocused();
 
     const handleClickVideo = () => {
         if (translateY?.value && translateY?.value > 0) handleClickSide();
@@ -92,11 +94,14 @@ const PlayingVideo = ({ video, nextVideo, translateY, bottomTranslateY, handleCl
         if (currentDuration >= video.duration && loaded) handleNextVideo();
     }, [currentDuration, loaded]);
 
+    useEffect(() => {
+        if (!focus) dispatch(setPlaying(false));
+    }, [focus]);
+
     return (
         <View style={styles.videoWrapper}>
             <Pressable style={styles.video} onPress={handleClickVideo}>
                 <VideoCustomize onReadyForDisplay={handleReadyForDisplay} video={video} videoRef={videoRef} />
-                {loaded || <Image source={video.posterUrl} style={{ width: '100%', aspectRatio: 375 / 210 }} />}
             </Pressable>
             <View style={styles.progressBar}>
                 <View style={styles.loaded} />

@@ -31,15 +31,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'flex-start',
     },
-    avatarBtn: {
-        width: 28,
-        height: 28,
-    },
-    avatarImage: {
-        width: '100%',
-        height: '100%',
-        borderRadius: 50,
-    },
     info: {
         flex: 1,
         gap: 4,

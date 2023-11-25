@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Dimensions, Platform, Pressable, ScrollView, View, useWindowDimensions } from 'react-native';
 import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated, {
@@ -60,7 +60,7 @@ const comment = comments[0];
 
 const DetailVideo = ({ selectedVideo }) => {
     const translateX = useSharedValue(0);
-    const translateY = useSharedValue(300);
+    const translateY = useSharedValue(0);
     const { top, bottom } = useSafeAreaInsets();
     const { height } = useWindowDimensions();
 
@@ -68,22 +68,18 @@ const DetailVideo = ({ selectedVideo }) => {
     const [isShowComment, setShowComment] = useState(false);
 
     const ref = useRef(null);
-    const bottomTranslateY = useMemo(() => height - SIDE_HEIGHT - top - bottom - NAVIGATION_HEIGHT, [bottom, top]);
+    const bottomTranslateY = useMemo(() => height - SIDE_HEIGHT - top - bottom - NAVIGATION_HEIGHT, []);
 
-    useEffect(() => {
-        translateY.value = 0;
-    }, []);
-
-    useEffect(() => {
-        if (selectedVideo) translateY.value = 0;
-    }, [selectedVideo]);
-
-    useEffect(() => {
+    useLayoutEffect(() => {
         ref.current?.scrollTo({
             y: 0,
             animated: true,
         });
 
+        if (selectedVideo) translateY.value = 0;
+    }, [selectedVideo]);
+
+    useEffect(() => {
         const data = videosData
             .filter((videoData) => videoData.id !== selectedVideo.id)
             .sort(() => Math.random() - Math.random());
@@ -118,56 +114,50 @@ const DetailVideo = ({ selectedVideo }) => {
         },
     });
 
-    const translateStyle = useAnimatedStyle(() => {
-        return {
-            transform: [{ translateY: translateY.value }],
-            height: interpolate(
-                translateY.value,
-                [IMAGE_TOP_DISTANCE, bottomTranslateY],
-                [SIZES.height - top - bottom, SIDE_HEIGHT],
-                {
-                    extrapolateRight: Extrapolate.CLAMP,
-                    extrapolateLeft: Extrapolate.CLAMP,
-                },
-            ),
-        };
-    });
-
-    const imageStyle = useAnimatedStyle(() => {
-        return {
-            width: interpolate(
-                translateY.value,
-                [(SIZES.height * 70) / 100, (SIZES.height * 75) / 100],
-                [SIZES.width, IMAGE_WIDTH_COL],
-                {
-                    extrapolateRight: Extrapolate.CLAMP,
-                    extrapolateLeft: Extrapolate.CLAMP,
-                },
-            ),
-            height: interpolate(
-                translateY.value,
-                [IMAGE_TOP_DISTANCE, IMAGE_BOTTOM_DISTANCE],
-                [BIG_IMAGE_SIZE, SIDE_HEIGHT],
-                {
-                    extrapolateRight: Extrapolate.CLAMP,
-                    extrapolateLeft: Extrapolate.CLAMP,
-                },
-            ),
-        };
-    });
-
-    const detailsStyle = useAnimatedStyle(() => {
-        return {
-            opacity: interpolate(translateY.value, [IMAGE_TOP_DISTANCE, (SIZES.height * 60) / 100], [1, 0], {
+    const translateStyle = useAnimatedStyle(() => ({
+        transform: [{ translateY: translateY.value }],
+        height: interpolate(
+            translateY.value,
+            [IMAGE_TOP_DISTANCE, bottomTranslateY],
+            [SIZES.height - top - bottom, SIDE_HEIGHT],
+            {
                 extrapolateRight: Extrapolate.CLAMP,
                 extrapolateLeft: Extrapolate.CLAMP,
-            }),
-        };
-    });
+            },
+        ),
+    }));
 
-    const handleClickSide = () => {
+    const imageStyle = useAnimatedStyle(() => ({
+        width: interpolate(
+            translateY.value,
+            [(SIZES.height * 70) / 100, (SIZES.height * 75) / 100],
+            [SIZES.width, IMAGE_WIDTH_COL],
+            {
+                extrapolateRight: Extrapolate.CLAMP,
+                extrapolateLeft: Extrapolate.CLAMP,
+            },
+        ),
+        height: interpolate(
+            translateY.value,
+            [IMAGE_TOP_DISTANCE, IMAGE_BOTTOM_DISTANCE],
+            [BIG_IMAGE_SIZE, SIDE_HEIGHT],
+            {
+                extrapolateRight: Extrapolate.CLAMP,
+                extrapolateLeft: Extrapolate.CLAMP,
+            },
+        ),
+    }));
+
+    const detailsStyle = useAnimatedStyle(() => ({
+        opacity: interpolate(translateY.value, [IMAGE_TOP_DISTANCE, (SIZES.height * 60) / 100], [1, 0], {
+            extrapolateRight: Extrapolate.CLAMP,
+            extrapolateLeft: Extrapolate.CLAMP,
+        }),
+    }));
+
+    const handleClickSide = useCallback(() => {
         if (translateY.value > 100) translateY.value = withTiming(0, { duration: 300 });
-    };
+    });
 
     const handleOpenComment = () => Platform.OS !== 'web' && setShowComment(true);
 
@@ -239,11 +229,9 @@ const DetailVideo = ({ selectedVideo }) => {
                 </Pressable>
 
                 {/* Videos */}
-                <View style={styles.videos}>
-                    {videos.map((video) => (
-                        <VideoItem key={video.id} video={video} />
-                    ))}
-                </View>
+                {videos.map((video) => (
+                    <VideoItem key={video.id} video={video} />
+                ))}
             </Animated.ScrollView>
         </Animated.View>
     );

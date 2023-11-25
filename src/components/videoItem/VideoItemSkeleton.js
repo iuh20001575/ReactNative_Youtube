@@ -5,14 +5,14 @@ import styles from './styles';
 
 const VideoItemSkeleton = () => {
     return (
-        <View style={{ width: '100%' }}>
-            <Skeleton style={[{ height: 'auto' }, styles.videoWrapper, { width: '100%' }]}></Skeleton>
+        <View>
+            <Skeleton style={[{ height: 'auto' }, styles.videoWrapper]} />
             <View style={styles.body}>
-                <Skeleton circle style={styles.avatarBtn}></Skeleton>
+                <Skeleton width={28} height={28} circle />
                 <View style={styles.info}>
-                    <Skeleton height={20} style={styles.title}></Skeleton>
-                    <Skeleton height={20} style={styles.title}></Skeleton>
-                    <Skeleton height={14} width='50%' style={styles.desc}></Skeleton>
+                    <Skeleton height={20} style={styles.title} />
+                    <Skeleton height={20} style={styles.title} />
+                    <Skeleton height={14} width='50%' style={styles.desc} />
                 </View>
             </View>
         </View>

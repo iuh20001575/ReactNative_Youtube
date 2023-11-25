@@ -85,7 +85,7 @@ const Home = () => {
                         {/* List Video */}
                         <View style={[styles.listVideo, styles.mt32]}>
                             {videos.map((video) => (
-                                <Video key={uuid.v4()} video={video} />
+                                <Video key={video.id} video={video} />
                             ))}
                         </View>
                     </Fragment>
