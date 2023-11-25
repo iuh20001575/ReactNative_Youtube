@@ -1,7 +1,7 @@
-import InViewPort from '@coffeebeanslabs/react-native-inviewport';
 import { ResizeMode, Video } from 'expo-av';
-import React, { useState } from 'react';
-import { Image, Pressable, View, useWindowDimensions } from 'react-native';
+import React, { memo, useEffect, useRef, useState } from 'react';
+import { Image, Pressable, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import TextCustomize from '~/components/text';
 import {
     CommentIconWhite,
@@ -12,95 +12,90 @@ import {
     Subscribe,
     UnlikeIconWhite,
 } from '../../components/icons/icons';
+import ShortAction from '../../components/shortAction/ShortAction';
 import { formatView } from '../../utils';
 import styles from './styles';
 
-export default function Short({ video }) {
-    const { height } = useWindowDimensions();
+function Short({ video, height, active }) {
     const [shouldPlay, setShouldPlay] = useState(false);
-    const [positionMillis, setPositionMillis] = useState(0);
-    const [click, setClick] = useState(false);
-    console.log('🚀 ~ Short ~ click:', click);
+    const [widthProgress, setWidthProgress] = useState(0);
+    const { top } = useSafeAreaInsets();
+    const ref = useRef();
+
+    const handleControl = () => setShouldPlay((prev) => !prev);
+    const handlePlaybackStatusUpdate = (e) => setWidthProgress((e.positionMillis / e.durationMillis) * 100);
+
+    useEffect(() => {
+        setShouldPlay(active);
+
+        if (active) ref.current?.replayAsync?.();
+    }, [active]);
 
     return (
-        <InViewPort
-            onChange={(value) => {
-                console.log('🚀 ~ Short ~ value:', value);
-                if (click) setClick(false);
-                else {
-                    setShouldPlay(value);
-                    setPositionMillis(0);
-                }
-            }}
-        >
-            <View style={[styles.bodyLayout, { height: height - 48 }]}>
-                <Pressable
-                    onPress={() => {
-                        setShouldPlay((prev) => !prev);
-                        setClick(true);
-                    }}
-                    style={{ position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 }}
-                >
+        <View style={{ height }}>
+            <View style={[styles.bodyLayout, styles.flex1]}>
+                <View style={styles.videoWrapper}>
                     <Video
                         resizeMode={ResizeMode.COVER}
                         shouldPlay={shouldPlay}
-                        style={{ width: '100%', height: '100%' }}
-                        videoStyle={{ width: '100%', height: '100%' }}
+                        style={styles.video}
+                        videoStyle={styles.video}
                         source={{ uri: video.videoUrl }}
                         isLooping
-                    ></Video>
-                </Pressable>
-
-                <View style={styles.headerLayout}>
-                    <View style={styles.headerIcon}>
-                        <ShortInfo />
-                    </View>
-                </View>
-                <View style={styles.actionLayout}>
-                    <View style={styles.actionItem}>
-                        <LikeIconWhite />
-                        <TextCustomize style={styles.textAction}>{formatView(video.like, false)}</TextCustomize>
-                    </View>
-                    <View style={styles.actionItem}>
-                        <UnlikeIconWhite />
-                        <TextCustomize style={styles.textAction}>Dislike</TextCustomize>
-                    </View>
-                    <View style={styles.actionItem}>
-                        <CommentIconWhite />
-                        <TextCustomize style={styles.textAction}>{formatView(video.dislike, false)}</TextCustomize>
-                    </View>
-                    <View style={styles.actionItem}>
-                        <ShareIconWhite />
-                        <TextCustomize style={styles.textAction}>share</TextCustomize>
-                    </View>
-                    <View style={styles.actionItem}>
-                        <RemixIconWhite />
-                        <TextCustomize style={styles.textRemix}>Remix</TextCustomize>
-                    </View>
+                        ref={ref}
+                        onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
+                    />
                 </View>
 
-                <View style={styles.imageMusicLayout}>
-                    <Image source={{ uri: video.avatar }}></Image>
-                </View>
-                <View style={styles.infoLayout}>
-                    <TextCustomize style={{ color: '#fff' }}>{video.title}</TextCustomize>
-                    <View style={styles.chanelLayout}>
-                        <View style={styles.channelItem}>
-                            <View style={styles.imageChannelLayout}>
-                                <Image style={styles.imageChannel} source={{ uri: video.avatar }}></Image>
+                {/* Actions */}
+                <Pressable onPress={handleControl} style={[styles.videoWrapper, { top }]}>
+                    {/* Header */}
+                    <View style={styles.headerLayout}>
+                        <View></View>
+                        <Pressable style={styles.headerIcon}>
+                            <ShortInfo />
+                        </Pressable>
+                    </View>
+
+                    {/* Side */}
+                    <View style={styles.actionLayout}>
+                        <ShortAction icon={LikeIconWhite}>{formatView(video.like, false)}</ShortAction>
+                        <ShortAction icon={UnlikeIconWhite}>{formatView(video.dislike, false)}</ShortAction>
+                        <ShortAction icon={CommentIconWhite}>{formatView(video.comment, false)}</ShortAction>
+                        <ShortAction icon={ShareIconWhite}>Share</ShortAction>
+                        <ShortAction icon={RemixIconWhite}>Remix</ShortAction>
+                    </View>
+
+                    {/* Music */}
+                    <View style={styles.imageMusicLayout}>
+                        <Image style={styles.imageMusic} source={{ uri: video.avatar }}></Image>
+                    </View>
+
+                    {/* Info */}
+                    <View style={styles.infoLayout}>
+                        <TextCustomize style={styles.textColor}>{video.title}</TextCustomize>
+                        <View style={styles.chanelLayout}>
+                            <View style={styles.channelItem}>
+                                <View style={styles.imageChannelLayout}>
+                                    <Image style={styles.imageChannel} source={{ uri: video.avatar }}></Image>
+                                </View>
+                                <TextCustomize style={styles.textColor}>{video.channelTag}</TextCustomize>
                             </View>
-                            <TextCustomize style={{ color: '#fff' }}>{video.channelTag}</TextCustomize>
+                            <Subscribe style={styles.subButtonLayout} />
                         </View>
-                        <Subscribe style={styles.subButtonLayout} />
                     </View>
-                </View>
-                <View style={styles.progressBar}>
-                    <View style={styles.loaded} />
-                    <View style={[styles.viewed /*{ width: `${(currentDuration / duration) * 100}%` }*/]}>
-                        <View style={styles.point} />
+
+                    {/* Progress */}
+                    <View style={styles.progressBar}>
+                        <View style={styles.loaded} />
+                        <View style={[styles.viewed, { width: `${widthProgress}%` }]}>
+                            <View style={styles.point} />
+                        </View>
                     </View>
-                </View>
+                </Pressable>
             </View>
-        </InViewPort>
+        </View>
     );
 }
+
+export default memo(Short);

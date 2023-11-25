@@ -15,8 +15,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     listVideo: {
-        marginTop: 32,
         gap: 8,
+    },
+    mt32: {
+        marginTop: 32,
     },
 });
 

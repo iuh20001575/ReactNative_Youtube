@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Image, Pressable } from 'react-native';
 import TextCustomize from '~/components/text';
 import useSearch from '../../hooks/useSearch';
@@ -15,11 +15,11 @@ const SearchItem = ({ data }) => {
                 {data.title}
             </TextCustomize>
             {!data.image || <Image style={styles.image} source={{ uri: data.image }} />}
-            <Pressable onPress={() => setValue(value)} style={styles.jumpBtn}>
+            <Pressable onPress={() => setValue(data.title)} style={styles.jumpBtn}>
                 <JumpIcon />
             </Pressable>
         </Pressable>
     );
 };
 
-export default SearchItem;
+export default memo(SearchItem);

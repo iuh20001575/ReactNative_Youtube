@@ -1,7 +1,7 @@
-import React, { useMemo } from 'react';
+import React, { forwardRef, useMemo } from 'react';
 import { Platform, TextInput } from 'react-native';
 
-const Input = ({ style, ...props }) => {
+const Input = ({ style, ...props }, ref) => {
     const styles = useMemo(() => {
         const styles = Array.isArray(style) ? style : [style];
 
@@ -13,7 +13,7 @@ const Input = ({ style, ...props }) => {
         return styles;
     }, []);
 
-    return <TextInput style={styles} {...props} />;
+    return <TextInput style={styles} {...props} ref={ref} />;
 };
 
-export default Input;
+export default forwardRef(Input);

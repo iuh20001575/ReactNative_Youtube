@@ -7,6 +7,8 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
+        duration: 21,
+        id: 1,
     },
     {
         videoUrl: 'https://res.cloudinary.com/dlqbdbf8s/video/upload/v1699950493/x83sqvwdxansvnja9lbx.mp4',
@@ -16,6 +18,8 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
+        duration: 13,
+        id: 2,
     },
     {
         videoUrl: 'https://res.cloudinary.com/dlqbdbf8s/video/upload/v1699950747/hmlqfpersbihgpelefs2.mp4',
@@ -25,6 +29,8 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
+        duration: 19,
+        id: 3,
     },
     {
         videoUrl: 'https://res.cloudinary.com/dlqbdbf8s/video/upload/v1699951520/mbm2xdw25nge3irp3kw0.mp4',
@@ -34,6 +40,8 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
+        duration: 17,
+        id: 4,
     },
     {
         videoUrl: 'https://res.cloudinary.com/dlqbdbf8s/video/upload/v1699951691/rwbfxkfan5onfeb0fcg0.mp4',
@@ -43,6 +51,8 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
+        duration: 24,
+        id: 5,
     },
     {
         videoUrl: 'https://res.cloudinary.com/dlqbdbf8s/video/upload/v1699976447/bd9fadwfeh9dv9lsbul0.mp4',
@@ -52,6 +62,8 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
+        duration: 14,
+        id: 6,
     },
     {
         videoUrl: 'https://res.cloudinary.com/dlqbdbf8s/video/upload/v1699976688/uxgcyovbj1unzxadh3r3.mp4',
@@ -61,6 +73,8 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
+        duration: 12,
+        id: 7,
     },
     {
         videoUrl: 'https://res.cloudinary.com/dlqbdbf8s/video/upload/v1699978826/idwtrccyhrqrpo3mpmrm.mp4',
@@ -70,15 +84,8 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
-    },
-    {
-        videoUrl: 'https://res.cloudinary.com/dlqbdbf8s/video/upload/v1699979277/vturzlfqoqi4mdhsao3d.mp4',
-        avatar: 'https://yt3.googleusercontent.com/mld0ofd1upCdJlHF57c0Vh47YDTCvT8r8xc0V-OdSOboNPOHKQHb6bp6aJLlajwz49QGY9CAag=s176-c-k-c0x00ffffff-no-rj',
-        title: 'TFBOYS',
-        channelTag: '@szehui07',
-        like: 1223,
-        dislike: 12,
-        comment: 123,
+        duration: 15,
+        id: 8,
     },
     {
         videoUrl: 'https://res.cloudinary.com/dlqbdbf8s/video/upload/v1699979448/vewwlzg4apeweyc0q5xx.mp4',
@@ -88,6 +95,8 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
+        duration: 11,
+        id: 10,
     },
     {
         videoUrl: 'https://res.cloudinary.com/dlqbdbf8s/video/upload/v1699979559/hn6rivvwaoqctjiexxgb.mp4',
@@ -97,6 +106,8 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
+        duration: 13,
+        id: 11,
     },
     {
         videoUrl: 'https://res.cloudinary.com/dlqbdbf8s/video/upload/v1699979658/nsps30emagzikdvvryqv.mp4',
@@ -106,6 +117,8 @@ const shortVideos = [
         like: 1223,
         dislike: 12,
         comment: 123,
+        duration: 28,
+        id: 12,
     },
 ];
 

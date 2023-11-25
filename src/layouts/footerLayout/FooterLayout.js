@@ -1,32 +1,35 @@
 import { useRoute } from '@react-navigation/native';
-import React, { useEffect } from 'react';
-import { ScrollView, View } from 'react-native';
-import Wrapper from '~/components/wrapper';
-import useTheme from '../../context/themeContext';
+import React, { useLayoutEffect } from 'react';
+import { View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useDispatch, useSelector } from 'react-redux';
+import { setTheme } from '../../features/themeSlice';
 import Navigation from '../components/navigation';
 import styles from './styles';
 
-const FooterLayout = ({ children }) => {
-    const { dark, setDark } = useTheme();
+const FooterLayout = ({ children, isSafe }) => {
     const route = useRoute();
+    const dispatch = useDispatch();
+    const { bottom, top } = useSafeAreaInsets();
+    const { dark } = useSelector((state) => state.theme);
 
-    useEffect(() => {
-        setDark(route.name === 'shorts');
+    useLayoutEffect(() => {
+        dispatch(setTheme(route.name === 'shorts'));
     }, [route]);
 
     return (
-        <Wrapper style={[styles.container, dark && { backgroundColor: '#0f0f0f' }]}>
+        <View
+            style={[
+                styles.container,
+                styles.flex1,
+                { paddingBottom: bottom, paddingTop: isSafe ? top : 0, backgroundColor: dark ? '#0f0f0f' : '#fff' },
+            ]}
+        >
             <View style={styles.flex1}>
-                <ScrollView
-                    style={styles.flex1}
-                    contentContainerStyle={styles.flex1}
-                    showsVerticalScrollIndicator={false}
-                >
-                    <View style={[styles.body, styles.scroll]}>{children}</View>
-                </ScrollView>
+                {children}
                 <Navigation />
             </View>
-        </Wrapper>
+        </View>
     );
 };
 
