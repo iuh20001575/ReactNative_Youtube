@@ -78,7 +78,7 @@ const Home = () => {
                                         Shorts
                                     </TextCustomize>
                                 </View>
-                                <ShortImage data={shorts} />
+                                <ShortImage limit={4} data={shorts} />
                             </View>
                         )}
 

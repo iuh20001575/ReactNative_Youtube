@@ -21,6 +21,9 @@ const shortsSlice = createSlice({
         sort: (state, { payload }) => {
             state.shorts = [payload, ...state.shorts.filter((s) => s.id !== payload.id)];
         },
+        addFirst: (state, { payload }) => {
+            state.shorts = [...new Set([...payload, ...state.shorts])];
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -40,5 +43,5 @@ const shortsSlice = createSlice({
 });
 
 export default shortsSlice.reducer;
-export const { sort } = shortsSlice.actions;
+export const { sort, addFirst } = shortsSlice.actions;
 export { getShorts };
