@@ -15,6 +15,7 @@ const ShortImage = ({ data, limit }) => {
             keyExtractor={(item) => item.id}
             columnWrapperStyle={styles.gap8}
             contentContainerStyle={styles.gap8}
+            showsVerticalScrollIndicator={false}
         />
     );
 };

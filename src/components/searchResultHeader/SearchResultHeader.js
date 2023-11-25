@@ -37,7 +37,7 @@ const SearchResultHeader = ({ loading }) => {
     const route = useRoute();
     const value = route.params?.value ?? '';
 
-    const handleClose = () => {};
+    const handleClose = () => navigation.goBack();
     const handleGoBack = () => navigation.goBack();
 
     return (
@@ -47,7 +47,9 @@ const SearchResultHeader = ({ loading }) => {
                     <BackIcon />
                 </Pressable>
                 <View style={[styles.inputGroup, styles.bgPrimary]}>
-                    <TextCustomize style={styles.input}>Search value</TextCustomize>
+                    <TextCustomize numberOfLines={1} style={styles.input}>
+                        {value}
+                    </TextCustomize>
                     <Pressable onPress={handleClose} style={styles.closeBtn}>
                         <CloseIcon />
                     </Pressable>

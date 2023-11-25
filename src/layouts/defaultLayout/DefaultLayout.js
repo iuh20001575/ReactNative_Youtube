@@ -1,5 +1,5 @@
 import { useRoute } from '@react-navigation/native';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { View } from 'react-native';
 import { ScrollView } from 'react-native-virtualized-view';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,7 +20,7 @@ const DefaultLayout = ({ children }) => {
 
     const dispatch = useDispatch();
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         dispatch(setTheme(route.name === 'shorts'));
     }, [route]);
 

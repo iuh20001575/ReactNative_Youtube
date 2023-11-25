@@ -1,14 +1,14 @@
 import { useRoute } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, ScrollView, View } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import DetailVideo from '../../components/detailVideo/DetailVideo';
 import SearchResultHeader from '../../components/searchResultHeader';
 import ShortImage from '../../components/shortImage';
 import VideoItem from '../../components/videoItem/VideoItem';
 import config from '../../config';
 import { FilterProvider } from '../../context/filterContext';
-import { addFirst } from '../../features/shortsSlice';
+import { videos as data } from '../../data';
 import FooterLayout from '../../layouts/footerLayout/FooterLayout';
 
 const SearchResult = () => {
@@ -19,10 +19,9 @@ const SearchResult = () => {
     const [selectedVideo, setSelectedVideo] = useState(null);
     const [loading, setLoading] = useState(true);
     const [videosData, setVideosData] = useState([]);
+    const [shorts, setShorts] = useState([]);
 
     const videos = useSelector((state) => state.playingVideo.videos);
-    const shorts = useSelector((state) => state.shorts.shorts);
-    const dispatch = useDispatch();
 
     useEffect(() => {
         setSelectedVideo(videos?.length ? videos.at(-1) : null);
@@ -35,9 +34,9 @@ const SearchResult = () => {
                 const res = await fetch(`${config.ENDPOINT}/search/shorts?query=${value}`);
                 const data = await res.json();
 
-                dispatch(addFirst(data));
+                setShorts(data);
             } else {
-                setVideosData(videos.filter((video) => new RegExp(value, 'i').test(video.title)));
+                setVideosData(data.filter((video) => new RegExp(value, 'i').test(video.title)));
             }
 
             setLoading(false);
@@ -56,7 +55,7 @@ const SearchResult = () => {
                     </View>
                 )) ||
                     (filter === 'Shorts' && <ShortImage data={shorts} />) || (
-                        <ScrollView>
+                        <ScrollView showsVerticalScrollIndicator={false}>
                             {videosData.map((item) => (
                                 <VideoItem key={item.id} video={item} />
                             ))}
