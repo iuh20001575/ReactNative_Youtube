@@ -1,10 +1,10 @@
-import React from 'react';
-import { Image, Pressable, View } from 'react-native';
+import React, { useMemo } from 'react';
+import { Pressable, View } from 'react-native';
 import { formatView } from '../../utils';
+import Avatar from '../avatar/Avatar';
 import { DownArrowIcon, NotificationIcon } from '../icons';
 import TextCustomize from '../text/TextCustomize';
 import styles from './styles';
-import { useMemo } from 'react';
 
 export default function Channel({ selectedVideo }) {
     const subscriptionNumber = useMemo(() => Math.random() * 10000000, [selectedVideo]);
@@ -12,7 +12,7 @@ export default function Channel({ selectedVideo }) {
     return (
         <View style={styles.channelWrapper}>
             <View style={styles.channel}>
-                <Image source={selectedVideo.avatar} style={styles.avatar} />
+                <Avatar size={32} source={selectedVideo.avatar} />
                 <View style={styles.channelInfo}>
                     <TextCustomize fontWeight={500} size='sm'>
                         {selectedVideo.channelName}

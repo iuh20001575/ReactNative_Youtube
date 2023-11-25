@@ -53,11 +53,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flex: 1,
     },
-    avatar: {
-        width: 32,
-        height: 32,
-        borderRadius: 16,
-    },
     channelInfo: {
         flexDirection: 'row',
         gap: 8,

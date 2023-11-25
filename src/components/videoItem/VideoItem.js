@@ -1,9 +1,10 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { Image, Pressable, View } from 'react-native';
 import { useDispatch } from 'react-redux';
 import TextCustomize from '~/components/text';
 import { formatRelativeTime, formatTimeVideo, formatView } from '~/utils';
 import { addVideo } from '../../features/playingVideoSlice';
+import Avatar from '../avatar/Avatar';
 import { MoreIcon } from '../icons';
 import styles from './styles';
 
@@ -25,9 +26,7 @@ const VideoItem = ({ video }) => {
                 </View>
             </View>
             <View style={styles.body}>
-                <Pressable style={styles.avatarBtn}>
-                    <Image resizeMode='cover' style={styles.avatarImage} source={video.avatar} />
-                </Pressable>
+                <Avatar source={video.avatar} size={28} />
                 <View style={styles.info}>
                     <TextCustomize size='md' style={styles.title}>
                         {video.title}
@@ -44,4 +43,4 @@ const VideoItem = ({ video }) => {
     );
 };
 
-export default memo(VideoItem);
+export default VideoItem;
