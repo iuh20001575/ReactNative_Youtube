@@ -1,6 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+    loading: { flex: 1, marginTop: 30 },
     subscriptionChannel: {
         flexDirection: 'row',
         flex: 1,

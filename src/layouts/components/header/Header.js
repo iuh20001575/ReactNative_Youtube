@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { memo } from 'react';
 import { Image, Pressable, View } from 'react-native';
 import { CastIcon, LogoIcon, NotificationIcon, SearchIcon, YouTubeIcon } from '~/components/icons';
 import styles from './styles';
@@ -8,6 +8,7 @@ const Header = () => {
     const navigation = useNavigation();
 
     const handleClickSearchBtn = () => navigation.navigate('search');
+    const handleClickAvatar = () => navigation.navigate('account');
 
     return (
         <View style={styles.container}>
@@ -25,7 +26,7 @@ const Header = () => {
                 <Pressable onPress={handleClickSearchBtn}>
                     <SearchIcon />
                 </Pressable>
-                <Pressable>
+                <Pressable onPress={handleClickAvatar}>
                     <Image style={styles.avatar} source={require('../../../../assets/avatar.jpg')} />
                 </Pressable>
             </View>
@@ -33,4 +34,4 @@ const Header = () => {
     );
 };
 
-export default Header;
+export default memo(Header);

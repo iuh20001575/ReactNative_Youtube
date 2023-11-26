@@ -11,7 +11,7 @@ import { useRobotoFonts } from '~/hooks';
 const TextCustomize = ({ size = 'md', fontWeight = 400, style = [], children, ...props }) => {
     const font = useRobotoFonts(fontWeight);
     const styles = useMemo(() => {
-        const styles = Array.isArray(style) ? style : [style];
+        const styles = [];
 
         styles.unshift({
             color: '#0F0F0F',
@@ -62,6 +62,9 @@ const TextCustomize = ({ size = 'md', fontWeight = 400, style = [], children, ..
         }
 
         styles.push({ fontWeight }, font);
+
+        if (Array.isArray(style)) styles.push(...style);
+        else styles.push(style);
 
         return styles;
     }, [style, font]);

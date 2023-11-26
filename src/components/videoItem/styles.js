@@ -2,13 +2,13 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     videoWrapper: {
-        aspectRatio: 1.7,
+        aspectRatio: 375 / 210,
         position: 'relative',
     },
-    poster: {
+    posterImage: {
         width: '100%',
-        height: '100%',
-        objectFit: 'cover',
+        aspectRatio: 375 / 210,
+        flex: 1,
     },
     durationView: {
         position: 'absolute',
@@ -31,15 +31,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'flex-start',
     },
-    avatarBtn: {
-        width: 28,
-        height: 28,
-    },
-    avatarImage: {
-        width: '100%',
-        height: '100%',
-        borderRadius: 50,
-    },
     info: {
         flex: 1,
         gap: 4,
@@ -50,7 +41,6 @@ const styles = StyleSheet.create({
     desc: {
         color: '#666666',
     },
-    moreBtn: {},
 });
 
 export default styles;

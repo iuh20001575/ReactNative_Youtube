@@ -1,39 +1,30 @@
-import React, { useState } from 'react';
-import { Image, Platform, Pressable, View } from 'react-native';
+import React from 'react';
+import { Image, Pressable, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 import TextCustomize from '~/components/text';
-import VideoCustomize from '~/components/video';
 import { formatRelativeTime, formatTimeVideo, formatView } from '~/utils';
+import { addVideo } from '../../features/playingVideoSlice';
+import Avatar from '../avatar/Avatar';
 import { MoreIcon } from '../icons';
 import styles from './styles';
 
 const VideoItem = ({ video }) => {
-    const [duration, setDuration] = useState(0);
+    const dispatch = useDispatch();
+
+    const handleClick = () => dispatch(addVideo(video));
 
     return (
-        <Pressable>
+        <Pressable onPress={handleClick}>
             <View style={styles.videoWrapper}>
-                <VideoCustomize
-                    video={video}
-                    onLoad={(e) => {
-                        setDuration(Math.floor(Platform.OS === 'web' ? e.target.duration : e.durationMillis / 1000));
-                    }}
-                />
+                <Image resizeMode='cover' style={styles.posterImage} source={video.posterUrl} />
                 <View style={styles.durationView}>
                     <TextCustomize size='xs' style={styles.duration}>
-                        {formatTimeVideo(duration)}
+                        {formatTimeVideo(video.duration)}
                     </TextCustomize>
                 </View>
             </View>
             <View style={styles.body}>
-                <Pressable style={styles.avatarBtn}>
-                    <Image
-                        resizeMode='cover'
-                        style={styles.avatarImage}
-                        source={{
-                            uri: video.avatar,
-                        }}
-                    />
-                </Pressable>
+                <Avatar source={video.avatar} size={28} />
                 <View style={styles.info}>
                     <TextCustomize size='md' style={styles.title}>
                         {video.title}
@@ -42,7 +33,7 @@ const VideoItem = ({ video }) => {
                         {video.channelName} · {formatView(video.views)} · {formatRelativeTime(new Date(video.date))}{' '}
                     </TextCustomize>
                 </View>
-                <Pressable onPress={() => console.log('More')} style={styles.moreBtn}>
+                <Pressable>
                     <MoreIcon />
                 </Pressable>
             </View>

@@ -2,6 +2,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import React from 'react';
 import { Pressable, View } from 'react-native';
 import uuid from 'react-native-uuid';
+import { useSelector } from 'react-redux';
 import TextCustomize from '~/components/text';
 import {
     AddCircleIcon,
@@ -14,8 +15,8 @@ import {
     SubscriptionFocusIcon,
     SubscriptionIcon,
 } from '../../../components/icons/icons';
-import useTheme from '../../../context/themeContext';
 import styles from './styles';
+import { memo } from 'react';
 
 const navigationList = [
     {
@@ -53,17 +54,19 @@ const navigationList = [
 const white = '#fff';
 const black = '#0f0f0f';
 
-const Navigation = ({}) => {
+const Navigation = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const { dark } = useTheme();
+    const { dark } = useSelector((state) => state.theme);
 
     return (
         <View
             style={[styles.container, dark && { backgroundColor: black, borderTopColor: 'rgba(255, 255, 255, 0.1)' }]}
         >
             {navigationList.map((item) => {
-                const Icon = route.name === item.name ? item.activeIcon : item.icon;
+                let Icon = route.name === item.name ? item.activeIcon : item.icon;
+
+                if (route.name === 'searchResult' && item.name === 'home') Icon = HomeFocusIcon;
 
                 return (
                     <Pressable key={uuid.v4()} style={styles.style1} onPress={() => navigation.navigate(item.name)}>
@@ -82,4 +85,4 @@ const Navigation = ({}) => {
     );
 };
 
-export default Navigation;
+export default memo(Navigation);

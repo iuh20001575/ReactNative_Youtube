@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useIsFocused } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
 import { SectionList } from 'react-native';
-import uuid from 'react-native-uuid';
 import SearchHeader from '~/components/searchHeader';
 import SearchItem from '~/components/searchItem';
 import Wrapper from '~/components/wrapper';
@@ -17,11 +17,17 @@ const Search = () => {
         },
     ]);
 
+    const focus = useIsFocused();
+
+    useEffect(() => {
+        focus && setValue('');
+    }, [focus]);
+
     return (
-        <Wrapper style={{ backgroundColor: '#fff', flex: 1 }}>
+        <Wrapper style={styles.container}>
             <SearchProvider value={{ value, setValue }}>
                 <SectionList
-                    keyExtractor={() => uuid.v4()}
+                    keyExtractor={(item) => item.id}
                     style={styles.list}
                     contentContainerStyle={styles.contentContainer}
                     sections={searchResult}
