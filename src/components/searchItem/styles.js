@@ -26,10 +26,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         height: '100%',
     },
-    model: {
-        flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    },
 });
 
 export default styles;

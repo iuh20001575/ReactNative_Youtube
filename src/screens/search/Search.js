@@ -24,7 +24,7 @@ const Search = () => {
     }, [focus]);
 
     return (
-        <Wrapper style={{ backgroundColor: '#fff', flex: 1 }}>
+        <Wrapper style={styles.container}>
             <SearchProvider value={{ value, setValue }}>
                 <SectionList
                     keyExtractor={(item) => item.id}

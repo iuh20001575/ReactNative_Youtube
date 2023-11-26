@@ -10,6 +10,7 @@ import config from '../../config';
 import { FilterProvider } from '../../context/filterContext';
 import { videos as data } from '../../data';
 import FooterLayout from '../../layouts/footerLayout/FooterLayout';
+import styles from './styles';
 
 const SearchResult = () => {
     const route = useRoute();
@@ -22,6 +23,7 @@ const SearchResult = () => {
     const [shorts, setShorts] = useState([]);
 
     const videos = useSelector((state) => state.playingVideo.videos);
+    const shortsData = useSelector((state) => state.shorts.shorts);
 
     useEffect(() => {
         setSelectedVideo(videos?.length ? videos.at(-1) : null);
@@ -34,9 +36,11 @@ const SearchResult = () => {
                 const res = await fetch(`${config.ENDPOINT}/search/shorts?query=${value}`);
                 const data = await res.json();
 
-                setShorts(data);
+                setShorts(data.length ? data : shortsData);
             } else {
-                setVideosData(data.filter((video) => new RegExp(value, 'i').test(video.title)));
+                const res = data.filter((video) => new RegExp(value, 'i').test(video.title));
+
+                setVideosData(res.length === 0 ? data : res);
             }
 
             setLoading(false);
@@ -50,7 +54,7 @@ const SearchResult = () => {
             <FilterProvider value={{ filter, setFilter }}>
                 <SearchResultHeader loading={loading} />
                 {(loading && (
-                    <View style={{ flex: 1, justifyContent: 'center' }}>
+                    <View style={styles.activityIndicator}>
                         <ActivityIndicator size='large' color='#004fd2' />
                     </View>
                 )) ||
