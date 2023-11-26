@@ -12,7 +12,7 @@ const Filter = ({ data, style = {}, ...props }) => {
             contentContainerStyle={[styles.container, style]}
             horizontal
             data={data}
-            renderItem={({ item, index }) => <FilterItem isFirst={item.icon} data={item} />}
+            renderItem={({ item }) => <FilterItem isFirst={item.icon} data={item} />}
             {...props}
         />
     );

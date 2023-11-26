@@ -28,9 +28,7 @@ const FilterItem = ({ data, isFirst }) => {
           };
 
     const handleClick = () => {
-        if (Icon) {
-            return;
-        }
+        if (Icon) return;
 
         setFilter(data.title);
     };

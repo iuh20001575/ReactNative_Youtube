@@ -11,9 +11,7 @@ import styles from './styles';
 const VideoItem = ({ video }) => {
     const dispatch = useDispatch();
 
-    const handleClick = () => {
-        dispatch(addVideo(video));
-    };
+    const handleClick = () => dispatch(addVideo(video));
 
     return (
         <Pressable onPress={handleClick}>
