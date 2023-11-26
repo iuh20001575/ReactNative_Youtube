@@ -17,7 +17,16 @@ import { comments, videos as videosData } from '../../data';
 import { formatView } from '../../utils';
 import Comment from '../comment/Comment';
 import Comments from '../comments/Comments';
-import { CutIcon, DislikeIcon, DownloadIcon, LikeIcon, SaveIcon, ShareIcon } from '../icons';
+import {
+    CutIcon,
+    DislikeActiveIcon,
+    DislikeIcon,
+    DownloadIcon,
+    LikeActiveIcon,
+    LikeIcon,
+    SaveIcon,
+    ShareIcon,
+} from '../icons';
 import InfoVideo from '../infoVideo/InfoVideo';
 import PlayingVideo from '../playingVideo/PlayingVideo';
 import TextCustomize from '../text/TextCustomize';
@@ -69,6 +78,7 @@ const DetailVideo = ({ selectedVideo }) => {
     const { top, bottom } = useSafeAreaInsets();
     const { height } = useWindowDimensions();
 
+    const [status, setStatus] = useState(0);
     const [videos, setVideos] = useState([]);
     const [isShowComment, setShowComment] = useState(false);
     const { count } = useSelector((state) => state.playingVideo);
@@ -174,6 +184,9 @@ const DetailVideo = ({ selectedVideo }) => {
 
     const handleOpenComment = () => Platform.OS !== 'web' && setShowComment(true);
 
+    const handleLike = () => setStatus((prev) => (prev === 1 ? 0 : 1));
+    const handleDislike = () => setStatus((prev) => (prev === 2 ? 0 : 2));
+
     return (
         <Animated.View style={[translateStyle, styles.wrapper, { height: SIZES.height - top - bottom }]}>
             <Comments isShow={isShowComment} setShow={setShowComment} />
@@ -212,12 +225,14 @@ const DetailVideo = ({ selectedVideo }) => {
                 {/* Categories */}
                 <ScrollView showsHorizontalScrollIndicator={false} horizontal contentContainerStyle={styles.categories}>
                     <Category.Wrapper isView>
-                        <Category.Wrapper>
-                            <Category icon={LikeIcon}>{formatView(selectedVideo.like, false)}</Category>
+                        <Category.Wrapper onPress={handleLike}>
+                            <Category icon={status === 1 ? LikeActiveIcon : LikeIcon}>
+                                {formatView(selectedVideo.like, false)}
+                            </Category>
                         </Category.Wrapper>
                         <Category.Separator />
-                        <Category.Wrapper>
-                            <Category icon={DislikeIcon}></Category>
+                        <Category.Wrapper onPress={handleDislike}>
+                            <Category icon={status === 2 ? DislikeActiveIcon : DislikeIcon} />
                         </Category.Wrapper>
                     </Category.Wrapper>
 

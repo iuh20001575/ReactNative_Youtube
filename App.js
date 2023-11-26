@@ -77,6 +77,8 @@ const screens = [
     },
 ];
 
+console.disableYellowBox = true;
+
 export default function App() {
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
