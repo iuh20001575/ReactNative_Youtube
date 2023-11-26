@@ -1,3 +1,4 @@
+import { useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Dimensions, Platform, Pressable, ScrollView, View, useWindowDimensions } from 'react-native';
 import { PanGestureHandler } from 'react-native-gesture-handler';
@@ -25,6 +26,8 @@ import ActionsSide from './ActionsSide';
 import Channel from './Channel';
 import InfoSide from './InfoSide';
 import styles from './styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { inc } from '../../features/playingVideoSlice';
 
 const SIZES = Dimensions.get('window');
 
@@ -59,6 +62,8 @@ const categories = [
 const comment = comments[0];
 
 const DetailVideo = ({ selectedVideo }) => {
+    const route = useRoute();
+
     const translateX = useSharedValue(0);
     const translateY = useSharedValue(0);
     const { top, bottom } = useSafeAreaInsets();
@@ -66,6 +71,8 @@ const DetailVideo = ({ selectedVideo }) => {
 
     const [videos, setVideos] = useState([]);
     const [isShowComment, setShowComment] = useState(false);
+    const { count } = useSelector((state) => state.playingVideo);
+    const dispatch = useDispatch();
 
     const ref = useRef(null);
     const bottomTranslateY = useMemo(() => height - SIDE_HEIGHT - top - bottom - NAVIGATION_HEIGHT, []);
@@ -85,6 +92,12 @@ const DetailVideo = ({ selectedVideo }) => {
             .sort(() => Math.random() - Math.random());
         setVideos(data);
     }, [selectedVideo]);
+
+    useLayoutEffect(() => {
+        if (count > 0) translateY.value = bottomTranslateY;
+
+        dispatch(inc());
+    }, [route.name]);
 
     const gestureHandler = useAnimatedGestureHandler({
         onStart: (_, ctx) => {
