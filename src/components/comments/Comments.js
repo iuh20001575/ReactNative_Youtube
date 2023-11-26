@@ -18,8 +18,7 @@ import styles from './styles';
 const Comments = ({ isShow, setShow }) => {
     const { top, bottom } = useSafeAreaInsets();
     const { height, width } = useSafeAreaFrame();
-    const [index, setIndex] = useState(-1);
-    const { snapPoints, heightModel } = useMemo(() => {
+    const { snapPoints } = useMemo(() => {
         const heightCalc = height - top - bottom;
 
         return {
@@ -31,8 +30,6 @@ const Comments = ({ isShow, setShow }) => {
 
     const handleSheetChanges = useCallback((index) => {
         if (index === -1) setShow(false);
-
-        setIndex(index);
     }, []);
 
     const renderBackdrop = useCallback((props) => <BottomSheetBackdrop {...props} opacity={1} />, []);

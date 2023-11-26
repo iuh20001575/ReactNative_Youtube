@@ -4,6 +4,7 @@ const initialState = {
     videos: [],
     index: -1,
     isPlaying: true,
+    count: 0,
 };
 
 export const playingVideoSlice = createSlice({
@@ -17,10 +18,12 @@ export const playingVideoSlice = createSlice({
         prevVideo: (state) => {
             state.index -= 1;
             state.videos.pop();
+            state.count = 0;
         },
         reset: (state) => {
             state.videos = [];
             state.index = -1;
+            state.count = 0;
         },
         setPlaying: (state, { payload }) => {
             state.isPlaying = payload;
@@ -28,9 +31,12 @@ export const playingVideoSlice = createSlice({
         togglePlaying: (state) => {
             state.isPlaying = !state.isPlaying;
         },
+        inc: (state) => {
+            state.count += 1;
+        },
     },
 });
 
-export const { addVideo, prevVideo, reset, setPlaying, togglePlaying } = playingVideoSlice.actions;
+export const { addVideo, prevVideo, reset, setPlaying, togglePlaying, inc } = playingVideoSlice.actions;
 
 export default playingVideoSlice.reducer;

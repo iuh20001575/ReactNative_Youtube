@@ -1,6 +1,8 @@
+import { useRoute } from '@react-navigation/core';
 import React, { Fragment, useEffect, useState } from 'react';
 import { ActivityIndicator, FlatList, View } from 'react-native';
 import uuid from 'react-native-uuid';
+import { useDispatch } from 'react-redux';
 import DefaultLayout from '~/layouts/defaultLayout/DefaultLayout';
 import HistoryItem from '../../components/historyItem/HistoryItem';
 import { Downloads, HistoryIcon, PlaylistIcon, YourMovies, YourVideos } from '../../components/icons/icons';
@@ -26,27 +28,12 @@ const options = [
     },
 ];
 
-const playlist = [
-    {
-        id: 1,
-        image: 'https://res.cloudinary.com/dfcvahbig/image/upload/v1700959142/reactnative/youtube/ReactNativevsFlutter_andygv.webp',
-        videos: [],
-        title: 'React Native',
-        isPrivate: true,
-    },
-    {
-        id: 2,
-        image: 'https://res.cloudinary.com/dfcvahbig/image/upload/v1700959142/reactnative/youtube/ReactNativeAnimations_zutghr.webp',
-        videos: [1, 2, 3],
-        title: 'RN - Animated',
-        isPrivate: true,
-    },
-];
-
 const Library = () => {
     const [playlist, setPlaylist] = useState([]);
     const [histories, setHistories] = useState([]);
     const [loading, setLoading] = useState(true);
+    const dispatch = useDispatch();
+    const route = useRoute();
 
     useEffect(() => {
         const playlistPromise = new Promise((resolve, reject) =>

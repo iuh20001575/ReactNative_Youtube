@@ -1,4 +1,4 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useIsFocused, useNavigation, useRoute } from '@react-navigation/native';
 import { ResizeMode, Video } from 'expo-av';
 import React, { memo, useEffect, useRef, useState } from 'react';
 import { Image, Pressable, View } from 'react-native';
@@ -21,6 +21,7 @@ import { useDispatch } from 'react-redux';
 import { setTheme } from '../../features/themeSlice';
 
 function Short({ video, height, active }) {
+    const focus = useIsFocused();
     const navigation = useNavigation();
     const route = useRoute();
     const showBack = route.params?.showBack;
@@ -48,6 +49,10 @@ function Short({ video, height, active }) {
         if (shouldPlay) ref.current.playAsync();
         else ref.current.pauseAsync();
     }, [shouldPlay]);
+
+    useEffect(() => {
+        if (!focus) ref.current.pauseAsync();
+    }, [focus]);
 
     return (
         <View style={{ height }}>

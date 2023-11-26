@@ -1,19 +1,19 @@
-import { useRoute } from '@react-navigation/native';
-import React, { useMemo, useState } from 'react';
+import { useIsFocused, useRoute } from '@react-navigation/native';
+import React, { useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { Dimensions, FlatList, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
 import FooterLayout from '~/layouts/footerLayout';
 import config from '../../config';
+import { getShorts, sort } from '../../features/shortsSlice';
+import { setTheme } from '../../features/themeSlice';
 import { compareNumber } from '../../utils';
 import Short from './Short';
-import { useEffect } from 'react';
-import { getShorts, sort } from '../../features/shortsSlice';
-import { useLayoutEffect } from 'react';
 
 const Shorts = () => {
     const route = useRoute();
     const short = route.params?.short;
+    const focus = useIsFocused();
 
     const dispatch = useDispatch();
     const { shorts, page, loading, isEnd } = useSelector((state) => state.shorts);
@@ -30,6 +30,10 @@ const Shorts = () => {
     useEffect(() => {
         if (selectedIndex + 2 >= shorts.length && !loading && !isEnd) dispatch(getShorts({ page: page + 1 }));
     }, [selectedIndex]);
+
+    useLayoutEffect(() => {
+        dispatch(setTheme(focus));
+    }, [focus]);
 
     return (
         <FooterLayout>
