@@ -36,3 +36,4 @@ yarn-error.*
 
 #
 src/components/template
+.vercel
