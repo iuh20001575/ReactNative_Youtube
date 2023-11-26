@@ -28,11 +28,7 @@ const Shorts = () => {
     }, [short]);
 
     useEffect(() => {
-        function getShort() {
-            dispatch(getShorts({ page: page + 1 }));
-        }
-
-        if (selectedIndex + 2 >= shorts.length && !loading && !isEnd) getShort();
+        if (selectedIndex + 2 >= shorts.length && !loading && !isEnd) dispatch(getShorts({ page: page + 1 }));
     }, [selectedIndex]);
 
     return (

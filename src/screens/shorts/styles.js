@@ -18,6 +18,14 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0,
     },
+    headerLeft: {
+        paddingLeft: 12,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    headerTitle: {
+        color: '#fff',
+    },
     headerIcon: {
         padding: 12,
     },
@@ -29,20 +37,10 @@ const styles = StyleSheet.create({
     videoWrapper: { position: 'absolute', top: 0, bottom: 0, left: 0, right: 0 },
     video: { width: '100%', height: '100%' },
 
-    musicWrapper: {
-        flexDirection: 'row',
-        gap: 8,
-        alignItems: 'center',
-    },
-
     actionLayout: {
         position: 'absolute',
         bottom: 63,
         right: 4,
-    },
-    actionItem: {
-        alignItems: 'center',
-        gap: 4,
     },
     imageMusicLayout: {
         width: 40,

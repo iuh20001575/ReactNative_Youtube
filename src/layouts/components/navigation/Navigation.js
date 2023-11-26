@@ -54,7 +54,7 @@ const navigationList = [
 const white = '#fff';
 const black = '#0f0f0f';
 
-const Navigation = ({}) => {
+const Navigation = () => {
     const navigation = useNavigation();
     const route = useRoute();
     const { dark } = useSelector((state) => state.theme);

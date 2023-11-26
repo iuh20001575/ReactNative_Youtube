@@ -11,6 +11,7 @@ const ShortImageItem = ({ data }) => {
     const handlePress = () =>
         navigation.navigate('shorts', {
             short: data,
+            showBack: true,
         });
 
     return (
