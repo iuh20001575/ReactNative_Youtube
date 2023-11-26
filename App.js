@@ -75,13 +75,6 @@ const screens = [
             title: 'Account',
         },
     },
-    {
-        name: 'account',
-        component: Account,
-        options: {
-            title: 'Account',
-        },
-    },
 ];
 
 export default function App() {

@@ -42,26 +42,6 @@ const styles = StyleSheet.create({
     name: {
         height: 45,
     },
-    anotherOption: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: 35,
-        paddingLeft: 28,
-        height: 48,
-        width: '100%',
-    },
-    anotherOptionEnd: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: 35,
-        paddingLeft: 28,
-        height: 48,
-        width: '100%',
-        borderBottomWidth: 1,
-        borderBottomColor: '#E4E4E4',
-    },
     footer: {
         position: 'absolute',
         bottom: 0,

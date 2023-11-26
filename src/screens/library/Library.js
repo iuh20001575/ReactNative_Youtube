@@ -1,152 +1,117 @@
-import React from 'react';
-import { Image, ScrollView, View } from 'react-native';
+import React, { Fragment, useEffect, useState } from 'react';
+import { ActivityIndicator, FlatList, View } from 'react-native';
+import uuid from 'react-native-uuid';
 import DefaultLayout from '~/layouts/defaultLayout/DefaultLayout';
-import {
-    Downloads,
-    HistoryIcon,
-    PlaylistIcon,
-    PlaylistWhiteIcon,
-    VideoInfo,
-    YourMovies,
-    YourVideos,
-} from '../../components/icons/icons';
-import TextCustomize from '../../components/text/TextCustomize';
+import HistoryItem from '../../components/historyItem/HistoryItem';
+import { Downloads, HistoryIcon, PlaylistIcon, YourMovies, YourVideos } from '../../components/icons/icons';
+import LibraryHeader from '../../components/libraryHeader/LibraryHeader';
+import LibraryItem from '../../components/libraryItem/LibraryItem';
+import Playlist from '../../components/playlist';
+import config from '../../config';
 import styles from './styles';
 
+const options = [
+    {
+        title: 'Your videos',
+        icon: YourVideos,
+    },
+    {
+        title: 'Downloads',
+        icon: Downloads,
+        number: 0,
+    },
+    {
+        title: 'Your movies',
+        icon: YourMovies,
+    },
+];
+
+const playlist = [
+    {
+        id: 1,
+        image: 'https://res.cloudinary.com/dfcvahbig/image/upload/v1700959142/reactnative/youtube/ReactNativevsFlutter_andygv.webp',
+        videos: [],
+        title: 'React Native',
+        isPrivate: true,
+    },
+    {
+        id: 2,
+        image: 'https://res.cloudinary.com/dfcvahbig/image/upload/v1700959142/reactnative/youtube/ReactNativeAnimations_zutghr.webp',
+        videos: [1, 2, 3],
+        title: 'RN - Animated',
+        isPrivate: true,
+    },
+];
+
 const Library = () => {
+    const [playlist, setPlaylist] = useState([]);
+    const [histories, setHistories] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const playlistPromise = new Promise((resolve, reject) =>
+            fetch(`${config.ENDPOINT}/playlist`)
+                .then((data) => data.json())
+                .then(resolve)
+                .catch(reject),
+        );
+        const historiesPromise = new Promise((resolve, reject) =>
+            fetch(`${config.ENDPOINT}/histories`)
+                .then((data) => data.json())
+                .then(resolve)
+                .catch(reject),
+        );
+
+        async function getData() {
+            setLoading(true);
+
+            const [playlist, histories] = await Promise.all([playlistPromise, historiesPromise]);
+
+            setHistories(histories);
+            setPlaylist(playlist);
+
+            setLoading(false);
+        }
+
+        getData();
+    }, []);
+
     return (
         <DefaultLayout>
-            <View style={styles.historyLayout}>
-                <View style={styles.history}>
-                    <HistoryIcon />
-                    <TextCustomize style={{ flex: 1 }}>History</TextCustomize>
-                    <TextCustomize style={{ color: '#0961D4' }}>View all</TextCustomize>
+            {(loading && (
+                <View style={styles.loading}>
+                    <ActivityIndicator size='large' color='#004fd2' />
                 </View>
-                <ScrollView
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    contentContainerStyle={styles.historyVideoLayout}
-                >
-                    <View style={styles.historyVideo}>
-                        <Image style={styles.historyImage} source={require('../../../assets/avatar.jpg')}></Image>
-                        <View style={styles.historyVideoTitle}>
-                            <View style={styles.videoTitle}>
-                                <TextCustomize size='sm' numberOfLines={2} style={{ marginBottom: 6 }}>
-                                    【TFBOYS 王俊凱】王俊凱新歌《Beautiful【Karry Wang Junkai】
-                                </TextCustomize>
-                                <TextCustomize size='xxs' numberOfLines={1} style={{ color: '#616161' }}>
-                                    TFBOYS 王俊凱 個人頻道 KARRY WANG JUNKAI
-                                </TextCustomize>
-                            </View>
-                            <View style={{ flex: 1 }}>
-                                <VideoInfo />
-                            </View>
-                        </View>
+            )) || (
+                <Fragment>
+                    <View style={styles.historyLayout}>
+                        <LibraryHeader icon={HistoryIcon} title='View all' />
+                        <FlatList
+                            horizontal
+                            contentContainerStyle={styles.historyVideoLayout}
+                            showsHorizontalScrollIndicator={false}
+                            data={histories}
+                            keyExtractor={(item) => item.id}
+                            renderItem={({ item }) => <HistoryItem data={item} />}
+                        />
                     </View>
-                    <View style={styles.historyVideo}>
-                        <Image style={styles.historyImage} source={require('../../../assets/avatar.jpg')}></Image>
-                        <View style={styles.historyVideoTitle}>
-                            <View style={styles.videoTitle}>
-                                <TextCustomize size='sm' numberOfLines={2} style={{ marginBottom: 6 }}>
-                                    【TFBOYS 王俊凱】王俊凱新歌《Beautiful【Karry Wang Junkai】
-                                </TextCustomize>
-                                <TextCustomize size='xxs' numberOfLines={1} style={{ color: '#616161' }}>
-                                    TFBOYS 王俊凱 個人頻道 KARRY WANG JUNKAI
-                                </TextCustomize>
-                            </View>
-                            <View style={{ flex: 1 }}>
-                                <VideoInfo />
-                            </View>
-                        </View>
+                    <View style={styles.historyLayout}>
+                        <LibraryHeader icon={PlaylistIcon} title='Playlists' />
+                        <FlatList
+                            horizontal
+                            contentContainerStyle={styles.historyVideoLayout}
+                            showsHorizontalScrollIndicator={false}
+                            data={playlist}
+                            keyExtractor={(item) => item.id}
+                            renderItem={({ item }) => <Playlist data={item} />}
+                        />
                     </View>
-                    <View style={styles.historyVideo}>
-                        <Image style={styles.historyImage} source={require('../../../assets/avatar.jpg')}></Image>
-                        <View style={styles.historyVideoTitle}>
-                            <View style={styles.videoTitle}>
-                                <TextCustomize size='sm' numberOfLines={2} style={{ marginBottom: 6 }}>
-                                    【TFBOYS 王俊凱】王俊凱新歌《Beautiful【Karry Wang Junkai】
-                                </TextCustomize>
-                                <TextCustomize size='xxs' numberOfLines={1} style={{ color: '#616161' }}>
-                                    TFBOYS 王俊凱 個人頻道 KARRY WANG JUNKAI
-                                </TextCustomize>
-                            </View>
-                            <View style={{ flex: 1 }}>
-                                <VideoInfo />
-                            </View>
-                        </View>
-                    </View>
-                    <View style={styles.historyVideo}>
-                        <Image style={styles.historyImage} source={require('../../../assets/avatar.jpg')}></Image>
-                        <View style={styles.historyVideoTitle}>
-                            <View style={styles.videoTitle}>
-                                <TextCustomize size='sm' numberOfLines={2} style={{ marginBottom: 6 }}>
-                                    【TFBOYS 王俊凱】王俊凱新歌《Beautiful【Karry Wang Junkai】
-                                </TextCustomize>
-                                <TextCustomize size='xxs' numberOfLines={1} style={{ color: '#616161' }}>
-                                    TFBOYS 王俊凱 個人頻道 KARRY WANG JUNKAI
-                                </TextCustomize>
-                            </View>
-                            <View style={{ flex: 1 }}>
-                                <VideoInfo />
-                            </View>
-                        </View>
-                    </View>
-                </ScrollView>
-            </View>
-            <View style={styles.historyLayout}>
-                <View style={styles.history}>
-                    <PlaylistIcon />
-                    <TextCustomize style={{ flex: 1 }}>Playlists</TextCustomize>
-                    <TextCustomize style={{ color: '#0961D4' }}>View all</TextCustomize>
-                </View>
-                <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.historyVideoLayout}>
-                    <View style={styles.historyVideo}>
-                        <View style={styles.playlistVideo}>
-                            <Image style={styles.historyImage} source={require('../../../assets/avatar.jpg')}></Image>
-                            <View style={styles.numberVideoPlaylist}>
-                                <PlaylistWhiteIcon />
-                                <TextCustomize size='xxs' style={{ color: '#ffffff' }}>
-                                    8
-                                </TextCustomize>
-                            </View>
-                        </View>
-                        <View style={styles.historyVideoTitle}>
-                            <View style={styles.videoTitle}>
-                                <TextCustomize size='sm' numberOfLines={2} style={{ marginBottom: 6 }}>
-                                    SUMMERTIME - ROYWANG
-                                </TextCustomize>
-                                <TextCustomize size='xxs' numberOfLines={1} style={{ color: '#616161' }}>
-                                    Private
-                                </TextCustomize>
-                            </View>
-                            <View style={{ flex: 1 }}>
-                                <VideoInfo />
-                            </View>
-                        </View>
-                    </View>
-                </ScrollView>
-            </View>
-            <View style={styles.anotherOption}>
-                <YourVideos />
-                <TextCustomize size='sm' style={{ flex: 1 }}>
-                    Your Videos
-                </TextCustomize>
-            </View>
-            <View style={styles.anotherOption}>
-                <Downloads />
-                <View style={{ height: 42, flex: 1 }}>
-                    <TextCustomize size='sm'>Downloads</TextCustomize>
-                    <TextCustomize size='xs' style={{ color: '#797979' }}>
-                        0 videos
-                    </TextCustomize>
-                </View>
-            </View>
-            <View style={styles.anotherOption}>
-                <YourMovies />
-                <TextCustomize size='sm' style={{ flex: 1 }}>
-                    Your Videos
-                </TextCustomize>
-            </View>
+                </Fragment>
+            )}
+
+            {options.map((option) => (
+                <LibraryItem data={option} key={uuid.v4()} />
+            ))}
         </DefaultLayout>
     );
 };
