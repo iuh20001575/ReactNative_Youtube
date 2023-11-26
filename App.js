@@ -12,6 +12,7 @@ import Short from '~/screens/shorts';
 import Subscriptions from '~/screens/subscriptions';
 import { store } from './src/app/store';
 import SearchResult from './src/screens/searchResult/SearchResult';
+import Account from './src/screens/account/Account';
 
 const Stack = createNativeStackNavigator();
 
@@ -65,6 +66,13 @@ const screens = [
         component: SearchResult,
         options: {
             title: 'Search Result',
+        },
+    },
+    {
+        name: 'account',
+        component: Account,
+        options: {
+            title: 'Account',
         },
     },
 ];

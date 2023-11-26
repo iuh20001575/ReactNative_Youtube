@@ -8,6 +8,7 @@ const Header = () => {
     const navigation = useNavigation();
 
     const handleClickSearchBtn = () => navigation.navigate('search');
+    const handleClickAvatar = () => navigation.navigate('account');
 
     return (
         <View style={styles.container}>
@@ -25,7 +26,7 @@ const Header = () => {
                 <Pressable onPress={handleClickSearchBtn}>
                     <SearchIcon />
                 </Pressable>
-                <Pressable>
+                <Pressable onPress={handleClickAvatar}>
                     <Image style={styles.avatar} source={require('../../../../assets/avatar.jpg')} />
                 </Pressable>
             </View>
