@@ -33,7 +33,7 @@ const VideoItem = ({ video }) => {
                         {video.channelName} · {formatView(video.views)} · {formatRelativeTime(new Date(video.date))}{' '}
                     </TextCustomize>
                 </View>
-                <Pressable onPress={() => console.log('More')}>
+                <Pressable>
                     <MoreIcon />
                 </Pressable>
             </View>

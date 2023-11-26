@@ -49,8 +49,6 @@ function Short({ video, height, active }) {
         else ref.current.pauseAsync();
     }, [shouldPlay]);
 
-    console.log('Render short', video.id);
-
     return (
         <View style={{ height }}>
             <View style={[styles.bodyLayout, styles.flex1]}>
