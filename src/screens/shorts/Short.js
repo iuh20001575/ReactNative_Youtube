@@ -17,8 +17,6 @@ import ShortAction from '../../components/shortAction/ShortAction';
 import TextCustomize from '../../components/text/TextCustomize';
 import { formatView } from '../../utils';
 import styles from './styles';
-import { useDispatch } from 'react-redux';
-import { setTheme } from '../../features/themeSlice';
 
 function Short({ video, height, active }) {
     const focus = useIsFocused();
@@ -30,12 +28,10 @@ function Short({ video, height, active }) {
     const [widthProgress, setWidthProgress] = useState(0);
     const { top } = useSafeAreaInsets();
     const ref = useRef();
-    const dispatch = useDispatch();
 
     const handleControl = () => setShouldPlay((prev) => !prev);
     const handlePlaybackStatusUpdate = (e) => setWidthProgress((e.positionMillis / e.durationMillis) * 100);
     const handleGoBack = () => {
-        dispatch(setTheme(false));
         navigation.goBack();
     };
 

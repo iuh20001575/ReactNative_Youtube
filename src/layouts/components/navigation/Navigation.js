@@ -1,8 +1,7 @@
-import { useNavigation, useRoute } from '@react-navigation/native';
-import React from 'react';
-import { Pressable, View } from 'react-native';
+import {useNavigation, useRoute} from '@react-navigation/native';
+import React, {memo} from 'react';
+import {Pressable, View} from 'react-native';
 import uuid from 'react-native-uuid';
-import { useSelector } from 'react-redux';
 import TextCustomize from '~/components/text';
 import {
     AddCircleIcon,
@@ -16,7 +15,6 @@ import {
     SubscriptionIcon,
 } from '../../../components/icons/icons';
 import styles from './styles';
-import { memo } from 'react';
 
 const navigationList = [
     {
@@ -51,18 +49,14 @@ const navigationList = [
     },
 ];
 
-const white = '#fff';
 const black = '#0f0f0f';
 
 const Navigation = () => {
     const navigation = useNavigation();
     const route = useRoute();
-    const { dark } = useSelector((state) => state.theme);
 
     return (
-        <View
-            style={[styles.container, dark && { backgroundColor: black, borderTopColor: 'rgba(255, 255, 255, 0.1)' }]}
-        >
+        <View style={[styles.container]}>
             {navigationList.map((item) => {
                 let Icon = route.name === item.name ? item.activeIcon : item.icon;
 
@@ -71,10 +65,10 @@ const Navigation = () => {
                 return (
                     <Pressable key={uuid.v4()} style={styles.style1} onPress={() => navigation.navigate(item.name)}>
                         <View style={styles.icon}>
-                            <Icon color={dark ? white : black} />
+                            <Icon color={black} />
                         </View>
                         {!item.title || (
-                            <TextCustomize numberOfLines={1} size='xxs' style={{ color: dark ? white : black }}>
+                            <TextCustomize numberOfLines={1} size='xxs' style={{ color: black }}>
                                 {item.title}
                             </TextCustomize>
                         )}
