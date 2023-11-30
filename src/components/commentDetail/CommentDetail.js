@@ -17,7 +17,7 @@ const CommentDetail = ({ comment }) => {
                         {comment.isEdited && '(edited)'}
                     </TextCustomize>
                     <TextCustomize numberOfLines={4} style={styles.comment}>
-                        {comment.comment}
+                        {comment.content}
                     </TextCustomize>
                 </View>
 
@@ -29,7 +29,7 @@ const CommentDetail = ({ comment }) => {
 
                 <Pressable style={styles.repliesBtn}>
                     <TextCustomize fontWeight={500} size='sm' style={styles.repliesText}>
-                        470 replies
+                        {comment.comments ?? 0} replies
                     </TextCustomize>
                 </Pressable>
             </View>

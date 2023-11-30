@@ -8,7 +8,7 @@ const Comment = ({ comment, lineText = 4 }) => {
         <View style={styles.comment}>
             <Image source={{ uri: comment.avatar }} resizeMode='cover' style={styles.avatar} />
             <TextCustomize style={styles.text} numberOfLines={lineText} size='xs'>
-                {comment.comment}
+                {comment.content}
             </TextCustomize>
         </View>
     );

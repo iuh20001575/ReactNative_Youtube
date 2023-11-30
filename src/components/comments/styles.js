@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     closeBtn: {
         padding: 16,
     },
-    comments: { marginTop: 8, gap: 24 },
+    comments: { marginTop: 8, gap: 24, paddingBottom: 70 },
     comment: {
         position: 'absolute',
         bottom: 0,

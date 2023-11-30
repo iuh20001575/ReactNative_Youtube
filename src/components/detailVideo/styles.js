@@ -89,6 +89,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     commentCount: { color: 'rgba(100, 100, 100, 1)' },
+
+    // Skeleton
+    skeletonContainer: {
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: 1,
+        backgroundColor: '#fff',
+    },
+    videoSkeleton: {
+        aspectRatio: 375 / 210,
+    },
+    info: {
+        padding: 12,
+    },
 });
 
 export default styles;

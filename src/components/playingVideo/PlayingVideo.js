@@ -24,11 +24,10 @@ import styles from './styles';
 let idDuration;
 let idShowAction;
 
-const PlayingVideo = ({ video, nextVideo, translateY, bottomTranslateY, handleClickSide }) => {
+const PlayingVideo = ({ video, nextVideo, translateY, bottomTranslateY, handleClickSide, loaded, setLoaded }) => {
     const [currentDuration, setCurrentDuration] = useState(0);
     const [showActions, setShowActions] = useState(true);
     const [count, setCount] = useState(0);
-    const [loaded, setLoaded] = useState(false);
     const videoRef = useRef();
     const { index, isPlaying } = useSelector((state) => state.playingVideo);
     const dispatch = useDispatch();
