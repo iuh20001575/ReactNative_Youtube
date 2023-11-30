@@ -12,8 +12,11 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import uuid from 'react-native-uuid';
+import { useDispatch, useSelector } from 'react-redux';
 import Category from '~/components/category';
+import config from '../../config';
 import { comments, videos as videosData } from '../../data';
+import { inc } from '../../features/playingVideoSlice';
 import { formatView } from '../../utils';
 import Comment from '../comment/Comment';
 import Comments from '../comments/Comments';
@@ -33,10 +36,9 @@ import TextCustomize from '../text/TextCustomize';
 import VideoItem from '../videoItem/VideoItem';
 import ActionsSide from './ActionsSide';
 import Channel from './Channel';
+import DetailVideoSkeleton from './DetailVideoSkeleton';
 import InfoSide from './InfoSide';
 import styles from './styles';
-import { useDispatch, useSelector } from 'react-redux';
-import { inc } from '../../features/playingVideoSlice';
 
 const SIZES = Dimensions.get('window');
 
@@ -78,9 +80,12 @@ const DetailVideo = ({ selectedVideo }) => {
     const { top, bottom } = useSafeAreaInsets();
     const { height } = useWindowDimensions();
 
+    const [loaded, setLoaded] = useState(false);
     const [status, setStatus] = useState(0);
     const [videos, setVideos] = useState([]);
     const [isShowComment, setShowComment] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [comments, setComments] = useState([]);
     const { count } = useSelector((state) => state.playingVideo);
     const dispatch = useDispatch();
 
@@ -97,10 +102,21 @@ const DetailVideo = ({ selectedVideo }) => {
     }, [selectedVideo]);
 
     useEffect(() => {
-        const data = videosData
-            .filter((videoData) => videoData.id !== selectedVideo.id)
-            .sort(() => Math.random() - Math.random());
-        setVideos(data);
+        async function getData() {
+            setLoading(true);
+            const data = videosData
+                .filter((videoData) => videoData.id !== selectedVideo.id)
+                .sort(() => Math.random() - Math.random());
+            setVideos(data);
+
+            const res = await fetch(`${config.ENDPOINT}/comments?videoId=${selectedVideo.id}`);
+            const comments = await res.json();
+
+            setLoading(false);
+            setComments(comments);
+        }
+
+        getData();
     }, [selectedVideo]);
 
     useLayoutEffect(() => {
@@ -189,7 +205,15 @@ const DetailVideo = ({ selectedVideo }) => {
 
     return (
         <Animated.View style={[translateStyle, styles.wrapper, { height: SIZES.height - top - bottom }]}>
-            <Comments isShow={isShowComment} setShow={setShowComment} />
+            <Comments
+                selectedVideo={selectedVideo}
+                comments={comments}
+                setComments={setComments}
+                isShow={isShowComment}
+                setShow={setShowComment}
+            />
+
+            {loaded || <DetailVideoSkeleton />}
 
             <View style={styles.playerContainer}>
                 <PanGestureHandler onGestureEvent={gestureHandler}>
@@ -197,13 +221,17 @@ const DetailVideo = ({ selectedVideo }) => {
                         <Pressable onPress={handleClickSide} style={styles.playerContainer}>
                             <Animated.View style={[imageStyle]}>
                                 {/* Video */}
-                                <PlayingVideo
-                                    video={selectedVideo}
-                                    nextVideo={videos[0]}
-                                    translateY={translateY}
-                                    bottomTranslateY={bottomTranslateY}
-                                    handleClickSide={handleClickSide}
-                                />
+                                {!loading && (
+                                    <PlayingVideo
+                                        loaded={loaded}
+                                        setLoaded={setLoaded}
+                                        video={selectedVideo}
+                                        nextVideo={videos[0]}
+                                        translateY={translateY}
+                                        bottomTranslateY={bottomTranslateY}
+                                        handleClickSide={handleClickSide}
+                                    />
+                                )}
                             </Animated.View>
 
                             <InfoSide selectedVideo={selectedVideo} />
@@ -250,10 +278,10 @@ const DetailVideo = ({ selectedVideo }) => {
                             Comments
                         </TextCustomize>
                         <TextCustomize size='xs' style={styles.commentCount}>
-                            32
+                            {comments?.length ?? 0}
                         </TextCustomize>
                     </View>
-                    <Comment lineText={2} comment={comment} />
+                    {!loading && comments?.[0] && <Comment lineText={2} comment={comments[0]} />}
                 </Pressable>
 
                 {/* Videos */}
